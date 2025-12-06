@@ -6,6 +6,18 @@ export class AutomovelService {
     constructor(private repository: IAutomovelRepository) {}
 
     public async criarAutomovel(automovel: Automovel): Promise<Automovel> {
+        if (!automovel) {
+            throw new Error('Dados do automóvel são obrigatórios');
+        }
+
+        if (!automovel.placa) {
+            throw new Error('Automóvel sem placa');
+        }
+    
+        if (this.repository.buscarPorPlaca(automovel.placa) != null) {
+            throw new Error('Automóvel já existe');
+        }
+
         return await this.repository.criar(automovel);
     }
 }
