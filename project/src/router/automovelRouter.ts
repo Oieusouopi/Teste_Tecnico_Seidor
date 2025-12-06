@@ -9,6 +9,6 @@ const repository = new AutomovelRepositoryMemory();
 const service = new AutomovelService(repository);
 const controller = new AutomovelController(service);
 
-automovelRouter.post('/', controller.criarAutomovel);
+automovelRouter.post('/criar', controller.criarAutomovel);
 
 export default automovelRouter;
