@@ -1,7 +1,7 @@
 import { Automovel } from "../../models/Automovel";
 import { IAutomovelRepository } from "./IAutomovelRepository";
 
-export class AutomovelMemory implements IAutomovelRepository {
+export class AutomovelRepositoryMemory implements IAutomovelRepository {
     private automoveis: Automovel[] = [];
 
     public async criar(automovel: Automovel): Promise<Automovel> {
