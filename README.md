@@ -42,7 +42,7 @@ curl -X POST /automovel/criar \
 | Método | Path | Descrição |
 | :--- | :--- | :--- |
 | **GET** | `/motorista/listarPorFiltro` | Retorna uma lista de todos os motoristas filtrados. requer um objeto de filtro `AutomovelFiltroDTO`. |
-| **GET** | `/motorista/buscarPorPlaca/{id}` | Retorna os detalhes de um motorista específico. |
+| **GET** | `/motorista/buscarPorId/{id}` | Retorna os detalhes de um motorista específico. |
 | **POST** | `/motorista/criar` | Cria um novo motorista. Requer um objeto `Motorista` no body. |
 | **PUT** | `/motorista/atualizar/{id}` | Atualiza todas as informações de um motorista existente. Requer um objeto `MotoristaAtualizarDTO` no body |
 | **DELETE** | `/motorista/deletar/{id}` | Remove um motorista. |
