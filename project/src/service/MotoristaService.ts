@@ -34,9 +34,9 @@ export class MotoristaService {
         return this.repository.deletar(id);
     }
 
-    public async buscarPorId(id: number): Promise<Motorista | null> {
+    public async buscarPorId(id: number): Promise<Motorista> {
         const motorista = await this.repository.buscarPorId(id);
-        
+
         if (motorista == null) {
             throw new Error('Automovel não existe');
         }

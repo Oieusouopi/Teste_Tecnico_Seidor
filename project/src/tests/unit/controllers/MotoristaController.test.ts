@@ -192,4 +192,64 @@ describe('MotoristaController', () => {
 
     });
 
+    describe('buscarPorId', () => {
+
+        beforeEach(() => {
+            jsonMock = jest.fn();
+            statusMock = jest.fn(() => ({ json: jsonMock })) as any;
+
+            mockReq = {
+                params: {},
+            };
+
+            mockRes = {
+                status: statusMock,
+            };
+
+            mockService = {
+                buscarPorId: jest.fn(),
+            };
+
+            controller = new MotoristaController(mockService as MotoristaService);
+        });
+
+        it('deve retornar um motorista com sucesso', async () => {
+            const id = 1;
+            const motorista = { id: 1, nome: "Rafael" };
+
+            mockReq.params = { id: String(id) };
+
+            (mockService.buscarPorId as jest.Mock).mockResolvedValueOnce(motorista);
+
+            await controller.buscarPorId(mockReq as Request, mockRes as Response);
+
+            expect(mockService.buscarPorId).toHaveBeenCalledWith(id);
+            expect(statusMock).toHaveBeenCalledWith(201);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: true,
+                dado: motorista,
+            });
+        });
+
+        it('deve retornar erro caso o service lance exceção', async () => {
+            const id = 1;
+            const erro = new Error("Motorista não encontrado");
+
+            mockReq.params = { id: String(id) };
+
+            (mockService.buscarPorId as jest.Mock).mockRejectedValueOnce(erro);
+
+            await controller.buscarPorId(mockReq as Request, mockRes as Response);
+
+            expect(mockService.buscarPorId).toHaveBeenCalledWith(id);
+            expect(statusMock).toHaveBeenCalledWith(400);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: false,
+                erro: "Motorista não encontrado",
+            });
+        });
+
+    });
+
+
 })

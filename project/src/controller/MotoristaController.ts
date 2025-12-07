@@ -59,4 +59,21 @@ export class MotoristaController {
         }
     }
 
+    public buscarPorId = async (req: Request, res: Response) => {
+        try {
+            const id: number = Number(req.params.id);
+            const motorista: Motorista = await this.service.buscarPorId(id);
+            
+            res.status(201).json({
+                sucesso: true,
+                dado: motorista,
+            })
+        } catch (error) {
+            res.status(400).json({
+                sucesso: false,
+                erro: error instanceof Error ? error.message : 'Erro desconhecido'
+            })
+        }
+    }
+
 }
