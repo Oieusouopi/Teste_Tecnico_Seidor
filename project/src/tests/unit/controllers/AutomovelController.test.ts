@@ -31,34 +31,37 @@ describe('AutomovelController', () => {
         };
     });
 
-    it('deve criar um automóvel com sucesso', async () => {
-        const automovel: Automovel = { placa: 'ABC-1234', marca: 'Fiat Uno', cor: 'azul' };
-        mockReq.body = automovel;
-
-        (mockService.criarAutomovel as jest.Mock).mockResolvedValueOnce(automovel);
-
-        await controller.criarAutomovel(mockReq as Request, mockRes as Response);
-
-        expect(mockService.criarAutomovel).toHaveBeenCalledWith(automovel);
-        expect(statusMock).toHaveBeenCalledWith(201);
-        expect(jsonMock).toHaveBeenCalledWith({
-            sucesso: true,
-            dados: automovel
+    describe('criar', () => {
+        it('deve criar um automóvel com sucesso', async () => {
+            const automovel: Automovel = { placa: 'ABC-1234', marca: 'Fiat Uno', cor: 'azul' };
+            mockReq.body = automovel;
+    
+            (mockService.criarAutomovel as jest.Mock).mockResolvedValueOnce(automovel);
+    
+            await controller.criarAutomovel(mockReq as Request, mockRes as Response);
+    
+            expect(mockService.criarAutomovel).toHaveBeenCalledWith(automovel);
+            expect(statusMock).toHaveBeenCalledWith(201);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: true,
+                dados: automovel
+            });
         });
-    });
-
-    it('deve retornar erro se o serviço lançar exceção', async () => {
-        const erro = new Error('Placa já existe');
-        mockReq.body = { placa: 'ABC-1234' };
-
-        (mockService.criarAutomovel as jest.Mock).mockRejectedValueOnce(erro);
-
-        await controller.criarAutomovel(mockReq as Request, mockRes as Response);
-
-        expect(statusMock).toHaveBeenCalledWith(400);
-        expect(jsonMock).toHaveBeenCalledWith({
-            sucesso: false,
-            erro: 'Placa já existe'
+    
+        it('deve retornar erro se o serviço lançar exceção', async () => {
+            const erro = new Error('Placa já existe');
+            mockReq.body = { placa: 'ABC-1234' };
+    
+            (mockService.criarAutomovel as jest.Mock).mockRejectedValueOnce(erro);
+    
+            await controller.criarAutomovel(mockReq as Request, mockRes as Response);
+    
+            expect(statusMock).toHaveBeenCalledWith(400);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: false,
+                erro: 'Placa já existe'
+            });
         });
-    });
+    })
+
 });

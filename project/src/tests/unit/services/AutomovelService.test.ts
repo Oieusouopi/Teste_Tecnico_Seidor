@@ -17,44 +17,50 @@ describe('AutomovelService', () => {
         service = new AutomovelService(mockRepository);
     });
 
-    it('deve criar um automóvel com sucesso', async () => {
-        const automovel: Automovel = { placa: 'ABC-1234', marca: 'Fiat Uno', cor: "azul" };
+    describe('criar', () => {
+        it('deve criar um automóvel com sucesso', async () => {
+            const automovel: Automovel = { placa: 'ABC-1234', marca: 'Fiat Uno', cor: "azul" };
+    
+            mockRepository.buscarPorPlaca.mockResolvedValueOnce(null);
+            mockRepository.criar.mockResolvedValueOnce(automovel);
+    
+            const result = await service.criarAutomovel(automovel);
+    
+            expect(mockRepository.buscarPorPlaca).toHaveBeenCalledWith('ABC-1234');
+            expect(mockRepository.criar).toHaveBeenCalledWith(automovel);
+            expect(result).toEqual(automovel);
+        });
+    
+        it('deve lançar erro se automóvel não for fornecido', async () => {
+            await expect(service.criarAutomovel(null as any))
+                .rejects
+                .toThrow('Dados do automóvel são obrigatórios');
+        });
+    
+        it('deve lançar erro se automóvel não tiver placa', async () => {
+            const automovel: Automovel = { placa: '', marca: 'Fiat Uno', cor: 'azul' };
+            await expect(service.criarAutomovel(automovel))
+                .rejects
+                .toThrow('Automóvel sem placa');
+        });
+    
+        it('deve lançar erro se automóvel já existir', async () => {
+            const automovel: Automovel = { placa: 'ABC-1234', marca: 'Fiat Uno', cor: 'azul' };
+            mockRepository.buscarPorPlaca.mockResolvedValueOnce(automovel);
+    
+            await expect(service.criarAutomovel(automovel))
+                .rejects
+                .toThrow('Automóvel já existe');
+        });
 
-        mockRepository.buscarPorPlaca.mockResolvedValueOnce(null);
-        mockRepository.criar.mockResolvedValueOnce(automovel);
+    })
 
-        const result = await service.criarAutomovel(automovel);
+    describe('atualizar', () => {
+        it('deve atualizar um automóvel com sucesso', async () => {
+            const automovel: Automovel = { placa: 'ABC-1234', marca: 'Fiat palio', cor: 'verde' };
+    
+            
+        });
+    })
 
-        expect(mockRepository.buscarPorPlaca).toHaveBeenCalledWith('ABC-1234');
-        expect(mockRepository.criar).toHaveBeenCalledWith(automovel);
-        expect(result).toEqual(automovel);
-    });
-
-    it('deve lançar erro se automóvel não for fornecido', async () => {
-        await expect(service.criarAutomovel(null as any))
-            .rejects
-            .toThrow('Dados do automóvel são obrigatórios');
-    });
-
-    it('deve lançar erro se automóvel não tiver placa', async () => {
-        const automovel: Automovel = { placa: '', marca: 'Fiat Uno', cor: 'azul' };
-        await expect(service.criarAutomovel(automovel))
-            .rejects
-            .toThrow('Automóvel sem placa');
-    });
-
-    it('deve lançar erro se automóvel já existir', async () => {
-        const automovel: Automovel = { placa: 'ABC-1234', marca: 'Fiat Uno', cor: 'azul' };
-        mockRepository.buscarPorPlaca.mockResolvedValueOnce(automovel);
-
-        await expect(service.criarAutomovel(automovel))
-            .rejects
-            .toThrow('Automóvel já existe');
-    });
-
-    it('deve atualizar um automóvel com sucesso', async () => {
-        const automovel: Automovel = { placa: 'ABC-1234', marca: 'Fiat palio', cor: 'verde' };
-
-        
-    });
 });
