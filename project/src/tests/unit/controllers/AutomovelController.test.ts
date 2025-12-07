@@ -15,7 +15,11 @@ describe('AutomovelController', () => {
 
     beforeEach(() => {
         mockService = {
-            criarAutomovel: jest.fn()
+            criarAutomovel: jest.fn(),
+            atualizar: jest.fn(),
+            buscarPorPlaca: jest.fn(),
+            deletar: jest.fn(),
+            listarPorFiltro: jest.fn(),
         };
 
         controller = new AutomovelController(mockService as AutomovelService);

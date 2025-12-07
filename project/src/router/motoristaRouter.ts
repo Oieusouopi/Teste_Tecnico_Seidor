@@ -1,8 +1,16 @@
 import { Router } from "express";
 import { MotoristaRepositoryMemory } from "../repositories/motorista/MotoristaRepositoryMemory";
+import { MotoristaService } from "../service/MotoristaService";
+import { IMotoristaRepository } from "../repositories/motorista/IMotoristaRepository";
+import { MotoristaController } from "../controller/MotoristaController";
 
-const router = Router();
+const motoristaRouter = Router();
 
-const repository = new MotoristaRepositoryMemory();
+const repository: IMotoristaRepository = new MotoristaRepositoryMemory();
+const service: MotoristaService = new MotoristaService(repository);
+const controller: MotoristaController = new MotoristaController(service);
 
-export default router;
+motoristaRouter.post('/criar', controller.criarMotorista);
+
+
+export default motoristaRouter;

@@ -2,12 +2,13 @@ import { Router } from "express";
 import { AutomovelRepositoryMemory } from "../repositories/automovel/AutomovelRepositoryMemory";
 import { AutomovelService } from "../service/AutomovelService";
 import { AutomovelController } from "../controller/AutomovelController";
+import { IAutomovelRepository } from "../repositories/automovel/IAutomovelRepository";
 
 const automovelRouter = Router();
 
-const repository = new AutomovelRepositoryMemory();
-const service = new AutomovelService(repository);
-const controller = new AutomovelController(service);
+const repository: IAutomovelRepository = new AutomovelRepositoryMemory();
+const service: AutomovelService = new AutomovelService(repository);
+const controller: AutomovelController = new AutomovelController(service);
 
 automovelRouter.post('/criar', controller.criarAutomovel);
 
