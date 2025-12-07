@@ -1,4 +1,5 @@
 import { MotoristaAtualizarDTO } from "../dto/MotoristaAtualizarDTO";
+import { MotoristaFiltroDTO } from "../dto/MotoristaFiltroDTO";
 import { Motorista } from "../models/Motorista";
 import { MotoristaService } from "../service/MotoristaService";
 import { Request, Response } from "express";
@@ -67,6 +68,23 @@ export class MotoristaController {
             res.status(201).json({
                 sucesso: true,
                 dado: motorista,
+            })
+        } catch (error) {
+            res.status(400).json({
+                sucesso: false,
+                erro: error instanceof Error ? error.message : 'Erro desconhecido'
+            })
+        }
+    }
+
+    public listarPorFiltro = async (req: Request, res: Response) => {
+        try {
+            const dados: MotoristaFiltroDTO = req.body;
+            const resultado: Motorista[] = await this.service.listarPorFiltro(dados);
+
+            res.status(200).json({
+                sucesso: true,
+                dados: resultado
             })
         } catch (error) {
             res.status(400).json({

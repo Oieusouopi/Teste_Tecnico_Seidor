@@ -18,4 +18,6 @@ motoristaRouter.delete('/deletar/:id', controller.deletar);
 
 motoristaRouter.get('/buscarPorId/:id', controller.buscarPorId);
 
+motoristaRouter.get('/listarPorFiltro', controller.listarPorFiltro);
+
 export default motoristaRouter;
