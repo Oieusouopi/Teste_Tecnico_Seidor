@@ -16,4 +16,6 @@ motoristaRouter.put('/atualizar/:id', controller.atualizarMotorista);
 
 motoristaRouter.delete('/deletar/:id', controller.deletar);
 
+motoristaRouter.get('/buscarPorId/:id', controller.buscarPorId);
+
 export default motoristaRouter;

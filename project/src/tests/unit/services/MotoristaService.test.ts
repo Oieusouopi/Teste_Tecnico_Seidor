@@ -130,7 +130,7 @@ describe('MotoristaService', () => {
 
             await expect(service.buscarPorId(999))
                 .rejects
-                .toThrow('Automovel não existe');
+                .toThrow('Motorista não existe');
 
             expect(mockRepository.buscarPorId).toHaveBeenCalledWith(999);
         });
@@ -140,7 +140,7 @@ describe('MotoristaService', () => {
 
             await expect(service.buscarPorId(5))
                 .rejects
-                .toThrow('Automovel não existe');
+                .toThrow('Motorista não existe');
 
             expect(mockRepository.buscarPorId).toHaveBeenCalledWith(5);
         });

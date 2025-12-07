@@ -38,7 +38,7 @@ export class MotoristaService {
         const motorista = await this.repository.buscarPorId(id);
 
         if (motorista == null) {
-            throw new Error('Automovel não existe');
+            throw new Error('Motorista não existe');
         }
 
         return motorista;
