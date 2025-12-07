@@ -43,4 +43,20 @@ export class MotoristaController {
         }
     }
 
+    public deletar = async (req: Request, res: Response) => {
+        try {
+            const id:  number = Number(req.params.id);
+            await this.service.deletar(id);
+
+            res.status(201).json({
+                sucesso: true,
+            })
+        } catch (error) {
+            res.status(400).json({
+                sucesso: false,
+                erro: error instanceof Error ? error.message : 'Erro desconhecido'
+            })
+        }
+    }
+
 }

@@ -135,5 +135,61 @@ describe('MotoristaController', () => {
 
     });
 
+    describe('deletar', () => {
+
+        beforeEach(() => {
+            jsonMock = jest.fn();
+            statusMock = jest.fn(() => ({ json: jsonMock })) as any;
+
+            mockReq = {
+                params: {},
+            };
+
+            mockRes = {
+                status: statusMock,
+            };
+
+            mockService = {
+                deletar: jest.fn(),
+            };
+
+            controller = new MotoristaController(mockService as MotoristaService);
+        });
+
+        it('deve deletar um motorista com sucesso', async () => {
+            const id = 1;
+
+            mockReq.params = { id: String(id) };
+
+            (mockService.deletar as jest.Mock).mockResolvedValueOnce(undefined);
+
+            await controller.deletar(mockReq as Request, mockRes as Response);
+
+            expect(mockService.deletar).toHaveBeenCalledWith(id);
+            expect(statusMock).toHaveBeenCalledWith(201);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: true
+            });
+        });
+
+        it('deve retornar erro caso o service lance exceção', async () => {
+            const id = 1;
+            const erro = new Error("Erro ao deletar");
+
+            mockReq.params = { id: String(id) };
+
+            (mockService.deletar as jest.Mock).mockRejectedValueOnce(erro);
+
+            await controller.deletar(mockReq as Request, mockRes as Response);
+
+            expect(mockService.deletar).toHaveBeenCalledWith(id);
+            expect(statusMock).toHaveBeenCalledWith(400);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: false,
+                erro: "Erro ao deletar"
+            });
+        });
+
+    });
 
 })
