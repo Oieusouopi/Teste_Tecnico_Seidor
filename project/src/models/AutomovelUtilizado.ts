@@ -1,8 +1,11 @@
+import { Automovel } from "./Automovel";
+import { Motorista } from "./Motorista";
+
 export interface AutomovelUtilizado {
     id: number;
     dataInicioUtilizacao: Date;
     dataFinalUtilizacao: Date;
-    motoristaId: number;
-    automovelPlaca: string;
+    motorista: Motorista;
+    automovel: Automovel;
     motivoUtilizacao: string;
 }
