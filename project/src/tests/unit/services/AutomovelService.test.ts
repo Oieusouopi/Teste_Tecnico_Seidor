@@ -7,6 +7,7 @@ const mockRepository: jest.Mocked<IAutomovelRepository> = {
     criar: jest.fn(),
     buscarPorPlaca: jest.fn(),
     listar: jest.fn(),
+    listarPorFiltos: jest.fn(),
     atualizar: jest.fn(),
     deletar: jest.fn(),
 };

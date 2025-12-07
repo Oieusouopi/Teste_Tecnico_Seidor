@@ -23,7 +23,7 @@ Este projeto pode ser rodado com docker ou sem docker (recomendo fortemente util
 | Método | Path | Descrição |
 | :--- | :--- | :--- |
 | **GET** | `/automovel/listar` | Retorna uma lista de todos os automóveis. |
-| **GET** | `/automovel/{id}` | Retorna os detalhes de um automóvel específico. |
+| **GET** | `/automovel/buscarPorPlaca/{placa}` | Retorna os detalhes de um automóvel específico. |
 | **POST** | `/automovel/criar` | Cria um novo usuário. Requer um objeto `Automovel` no body. |
 | **PUT** | `/automovel/atualizar/{placa}` | Atualiza todas as informações de um usuário existente. Requer um objeto `AutomovelAtualizarDTO` no body |
 | **DELETE** | `/automovel/deletar/{placa}` | Remove um automóvel. |

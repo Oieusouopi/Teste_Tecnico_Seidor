@@ -1,4 +1,5 @@
 import { AutomovelAtualizarDTO } from "../../dto/AutomovelAtualizarDTO";
+import { AutomovelFiltroDTO } from "../../dto/AutomovelFiltroDTO";
 import { Automovel } from "../../models/Automovel";
 import { IAutomovelRepository } from "./IAutomovelRepository";
 
@@ -12,6 +13,22 @@ export class AutomovelRepositoryMemory implements IAutomovelRepository {
 
     public async listar(): Promise<Automovel[]> {
         return this.automoveis;
+    }
+
+    public async listarPorFiltos(automovelFiltroDTO: AutomovelFiltroDTO): Promise<Automovel[]> {
+        const automoveis = this.automoveis.filter((a) => {
+            if (automovelFiltroDTO.cor && a.cor !== automovelFiltroDTO.cor) {
+                return false;
+            }
+
+            if (automovelFiltroDTO.marca && a.marca !== automovelFiltroDTO.marca) {
+                return false;
+            }
+
+            return true;
+        });
+
+        return automoveis;
     }
 
     public async buscarPorPlaca(placa: string): Promise<Automovel | null> {
@@ -29,5 +46,9 @@ export class AutomovelRepositoryMemory implements IAutomovelRepository {
 
     public async deletar(placa: string): Promise<void> {
         this.automoveis = this.automoveis.filter(a => a.placa != placa);
+    }
+
+    public limpar(): void {
+        this.automoveis = [];
     }
 }

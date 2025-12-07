@@ -65,6 +65,45 @@ describe('AutomovelRepositoryMemory', () => {
         })
     });
 
+    describe('listarPorFiltros', () => {
+        beforeEach(async () => {
+            repository.limpar();
+
+            await repository.criar({ placa: 'ABC-1234', marca: 'Fiat', cor: 'Azul' });
+            await repository.criar({ placa: 'DEF-5678', marca: 'Ford', cor: 'Vermelho' });
+            await repository.criar({ placa: 'GHI-9012', marca: 'Fiat', cor: 'Preto' });
+        });
+
+        it('deve retornar todos os automóveis quando nenhum filtro for passado', async () => {
+            const resultado = await repository.listarPorFiltos({cor: null, marca: null});
+            expect(resultado.length).toBe(3);
+        });
+
+        it('deve filtrar por cor', async () => {
+            const resultado = await repository.listarPorFiltos({ cor: 'Azul', marca: null });
+            expect(resultado.length).toBe(1);
+            expect(resultado[0].placa).toBe('ABC-1234');
+        });
+
+        it('deve filtrar por marca', async () => {
+            const resultado = await repository.listarPorFiltos({ marca: 'Fiat', cor: null });
+            expect(resultado.length).toBe(2);
+            expect(resultado.map(a => a.placa)).toEqual(expect.arrayContaining(['ABC-1234', 'GHI-9012']));
+        });
+
+        it('deve filtrar por marca e cor', async () => {
+            const resultado = await repository.listarPorFiltos({ marca: 'Fiat', cor: 'Preto' });
+            expect(resultado.length).toBe(1);
+            expect(resultado[0].placa).toBe('GHI-9012');
+        });
+
+        it('deve retornar vazio se nenhum automóvel corresponder ao filtro', async () => {
+            const resultado = await repository.listarPorFiltos({ marca: 'Chevrolet', cor: 'Amarelo' });
+            expect(resultado).toEqual([]);
+        });
+    });
+
+
     describe('atualizar', () => {
         it('deve atualizar o automóvel', async () => {
             
