@@ -52,4 +52,8 @@ export class AutomovelService {
     public async deletar(placa: string): Promise<void> {
         return await this.repository.deletar(placa);
     }
+
+    public async buscarPorPlaca(placa: string): Promise<Automovel | null> {
+        return await this.repository.buscarPorPlaca(placa);
+    }
 }
