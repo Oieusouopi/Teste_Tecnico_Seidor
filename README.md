@@ -12,8 +12,9 @@ Este projeto pode ser rodado com docker ou sem docker (recomendo fortemente util
 
 ## Docker vs Localmente
 
+docker build -t minha-api .
 
-## Endpoints utilizados
+docker run -p 3000:3000 -p 9229:9229 minha-api
 
 ## Endpoints da API
 
@@ -24,11 +25,11 @@ Este projeto pode ser rodado com docker ou sem docker (recomendo fortemente util
 | :--- | :--- | :--- |
 | **GET** | `/automovel/listarPorFiltro` | Retorna uma lista de todos os automóveis filtrados. requer um objeto de filtro `AutomovelFiltroDTO`. |
 | **GET** | `/automovel/buscarPorPlaca/{placa}` | Retorna os detalhes de um automóvel específico. |
-| **POST** | `/automovel/criar` | Cria um novo usuário. Requer um objeto `Automovel` no body. |
-| **PUT** | `/automovel/atualizar/{placa}` | Atualiza todas as informações de um usuário existente. Requer um objeto `AutomovelAtualizarDTO` no body |
+| **POST** | `/automovel/criar` | Cria um novo automóvel. Requer um objeto `Automovel` no body. |
+| **PUT** | `/automovel/atualizar/{placa}` | Atualiza todas as informações de um automóvel existente. Requer um objeto `AutomovelAtualizarDTO` no body |
 | **DELETE** | `/automovel/deletar/{placa}` | Remove um automóvel. |
 
-### Exemplo de Uso (Criar Automóvel)
+#### Exemplo de Uso (Criar Automóvel)
 
 ```bash
 curl -X POST /automovel/criar \
@@ -37,6 +38,22 @@ curl -X POST /automovel/criar \
 ```
 
 ### Motorista
+
+| Método | Path | Descrição |
+| :--- | :--- | :--- |
+| **GET** | `/motorista/listarPorFiltro` | Retorna uma lista de todos os motoristas filtrados. requer um objeto de filtro `AutomovelFiltroDTO`. |
+| **GET** | `/motorista/buscarPorPlaca/{id}` | Retorna os detalhes de um motorista específico. |
+| **POST** | `/motorista/criar` | Cria um novo motorista. Requer um objeto `Motorista` no body. |
+| **PUT** | `/motorista/atualizar/{id}` | Atualiza todas as informações de um motorista existente. Requer um objeto `MotoristaAtualizarDTO` no body |
+| **DELETE** | `/motorista/deletar/{id}` | Remove um motorista. |
+
+#### Exemplo de Uso (Criar Automóvel)
+
+```bash
+curl -X POST /motorista/criar \
+     -H "Content-Type: application/json" \
+     -d '{ nome: "rafael" }'
+```
 
 ### Automovel Utilizado
 
