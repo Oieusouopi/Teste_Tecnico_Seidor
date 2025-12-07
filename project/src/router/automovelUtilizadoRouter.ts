@@ -1,6 +1,8 @@
 import { Router } from "express";
+import { automovelUtilizadoController } from "../dependencies/automovelUtilizado.dependencies";
 
-const router = Router();
+const automovelUtilizado = Router();
 
+automovelUtilizado.post('/criar', automovelUtilizadoController.criarAutomovelUtilizado)
 
-export default router;
+export default automovelUtilizado;

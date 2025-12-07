@@ -31,10 +31,7 @@ describe('AutomovelUtilizadoRepository', () => {
 
             const resultado = await repository.criarAutomovelUtilizado(automovelUtilizado);
 
-            // deve retornar o próprio objeto
             expect(resultado).toEqual(automovelUtilizado);
-
-            // deve ter sido salvo no array interno
             expect(repository.automoveisUtilizados.length).toBe(1);
             expect(repository.automoveisUtilizados[0]).toEqual(automovelUtilizado);
         });

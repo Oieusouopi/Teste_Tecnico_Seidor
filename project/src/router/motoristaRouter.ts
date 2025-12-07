@@ -1,23 +1,16 @@
 import { Router } from "express";
-import { MotoristaRepositoryMemory } from "../repositories/motorista/MotoristaRepositoryMemory";
-import { MotoristaService } from "../service/MotoristaService";
-import { IMotoristaRepository } from "../repositories/motorista/IMotoristaRepository";
-import { MotoristaController } from "../controller/MotoristaController";
+import { motoristaController } from "../dependencies/motoristas.dependencies";
 
 const motoristaRouter = Router();
 
-const repository: IMotoristaRepository = new MotoristaRepositoryMemory();
-const service: MotoristaService = new MotoristaService(repository);
-const controller: MotoristaController = new MotoristaController(service);
+motoristaRouter.post('/criar', motoristaController.criarMotorista);
 
-motoristaRouter.post('/criar', controller.criarMotorista);
+motoristaRouter.put('/atualizar/:id', motoristaController.atualizarMotorista);
 
-motoristaRouter.put('/atualizar/:id', controller.atualizarMotorista);
+motoristaRouter.delete('/deletar/:id', motoristaController.deletar);
 
-motoristaRouter.delete('/deletar/:id', controller.deletar);
+motoristaRouter.get('/buscarPorId/:id', motoristaController.buscarPorId);
 
-motoristaRouter.get('/buscarPorId/:id', controller.buscarPorId);
-
-motoristaRouter.get('/listarPorFiltro', controller.listarPorFiltro);
+motoristaRouter.get('/listarPorFiltro', motoristaController.listarPorFiltro);
 
 export default motoristaRouter;

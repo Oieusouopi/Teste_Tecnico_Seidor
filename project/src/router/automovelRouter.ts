@@ -3,21 +3,18 @@ import { AutomovelRepositoryMemory } from "../repositories/automovel/AutomovelRe
 import { AutomovelService } from "../service/AutomovelService";
 import { AutomovelController } from "../controller/AutomovelController";
 import { IAutomovelRepository } from "../repositories/automovel/IAutomovelRepository";
+import { automovelController } from "../dependencies/automovel.dependencies";
 
 const automovelRouter = Router();
 
-const repository: IAutomovelRepository = new AutomovelRepositoryMemory();
-const service: AutomovelService = new AutomovelService(repository);
-const controller: AutomovelController = new AutomovelController(service);
+automovelRouter.post('/criar', automovelController.criarAutomovel);
 
-automovelRouter.post('/criar', controller.criarAutomovel);
+automovelRouter.put('/atualizar/:placa', automovelController.atualizarAutomovel);
 
-automovelRouter.put('/atualizar/:placa', controller.atualizarAutomovel);
+automovelRouter.delete('/deletar/:placa', automovelController.deletarAutomovel);
 
-automovelRouter.delete('/deletar/:placa', controller.deletarAutomovel);
+automovelRouter.get('/buscarPorPlaca/:placa', automovelController.buscarPorPlaca);
 
-automovelRouter.get('/buscarPorPlaca/:placa', controller.buscarPorPlaca);
-
-automovelRouter.get('/listarPorFiltro', controller.listarPorFiltro);
+automovelRouter.get('/listarPorFiltro', automovelController.listarPorFiltro);
 
 export default automovelRouter;
