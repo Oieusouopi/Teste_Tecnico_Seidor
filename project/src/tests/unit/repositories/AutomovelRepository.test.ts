@@ -121,6 +121,6 @@ describe('AutomovelRepositoryMemory', () => {
         it('não deve falhar se a placa não existir', async () => {
             await expect(repository.deletar('XYZ-9999')).resolves.not.toThrow();
         });
-    })
+    });
 
 });

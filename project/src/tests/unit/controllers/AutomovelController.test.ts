@@ -138,5 +138,9 @@ describe('AutomovelController', () => {
         });
     });
 
+    describe('buscarPorPlaca', () => {
+        
+    })
+
 
 });

@@ -122,4 +122,25 @@ describe('AutomovelService', () => {
         });
     });
 
+    describe('buscarPorPlaca', () => {
+        it('deve retornar o automóvel se existir', async () => {
+            const placa = 'ABC-1234';
+            const automovel: Automovel = { placa, marca: 'Fiat Uno', cor: 'azul' };
+
+            mockRepository.buscarPorPlaca.mockResolvedValueOnce(automovel);
+
+            await expect(service.buscarPorPlaca(placa)).resolves.toEqual(automovel);
+            expect(mockRepository.buscarPorPlaca).toHaveBeenCalledWith(placa);
+        });
+
+        it('deve retornar null se o automóvel não existir', async () => {
+            const placa = 'XYZ-9999';
+
+            mockRepository.buscarPorPlaca.mockResolvedValueOnce(null);
+
+            await expect(service.buscarPorPlaca(placa)).resolves.toBeNull();
+            expect(mockRepository.buscarPorPlaca).toHaveBeenCalledWith(placa);
+        });
+    });
+
 });
