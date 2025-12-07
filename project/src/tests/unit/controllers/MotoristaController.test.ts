@@ -67,5 +67,73 @@ describe('MotoristaController', () => {
 
     });
 
+    describe('atualizarMotorista', () => {
+
+        beforeEach(() => {
+            jsonMock = jest.fn();
+            statusMock = jest.fn(() => ({ json: jsonMock })) as any;
+
+            mockReq = {
+                params: {},
+                body: {},
+            };
+
+            mockRes = {
+                status: statusMock,
+            };
+
+            mockService = {
+                atualizarMotorista: jest.fn(),
+            };
+
+            controller = new MotoristaController(mockService as MotoristaService);
+        });
+
+        it('deve atualizar um motorista com sucesso', async () => {
+            const id = 1;
+            const motoristaAtualizado = { id, nome: "João Atualizado" };
+
+            mockReq.params = { id: String(id) };
+            mockReq.body = { nome: "João Atualizado" };
+
+            (mockService.atualizarMotorista as jest.Mock)
+                .mockResolvedValueOnce(motoristaAtualizado);
+
+            await controller.atualizarMotorista(mockReq as Request, mockRes as Response);
+
+            expect(mockService.atualizarMotorista)
+                .toHaveBeenCalledWith(id, { nome: "João Atualizado" });
+
+            expect(statusMock).toHaveBeenCalledWith(201);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: true,
+                dados: motoristaAtualizado
+            });
+        });
+
+        it('deve retornar erro caso o service lance exceção', async () => {
+            const id = 1;
+            const erro = new Error("Dados inválidos");
+
+            mockReq.params = { id: String(id) };
+            mockReq.body = { nome: "" };
+
+            (mockService.atualizarMotorista as jest.Mock)
+                .mockRejectedValueOnce(erro);
+
+            await controller.atualizarMotorista(mockReq as Request, mockRes as Response);
+
+            expect(mockService.atualizarMotorista)
+                .toHaveBeenCalledWith(id, { nome: "" });
+
+            expect(statusMock).toHaveBeenCalledWith(400);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: false,
+                erro: "Dados inválidos"
+            });
+        });
+
+    });
+
 
 })
