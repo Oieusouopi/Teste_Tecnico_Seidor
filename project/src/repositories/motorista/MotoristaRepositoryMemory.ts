@@ -34,7 +34,8 @@ export class MotoristaRepositoryMemory implements IMotoristaRepository {
         return this.motoristas;
     }
 
-    public async listarPorFiltro(motoristaFiltroDTO: MotoristaFiltroDTO): Promise<Motorista[]> {
+     public async listarPorFiltro(motoristaFiltroDTO: MotoristaFiltroDTO): Promise<Motorista[]> {
+        
          const motoristas = this.motoristas.filter((m) => {
             if (motoristaFiltroDTO.nome && m.nome !== motoristaFiltroDTO.nome) {
                 return false;
@@ -44,6 +45,8 @@ export class MotoristaRepositoryMemory implements IMotoristaRepository {
         });
 
         return motoristas;
+
+        
     }
 
     public async buscarPorId(id: number): Promise<Motorista | null> {
