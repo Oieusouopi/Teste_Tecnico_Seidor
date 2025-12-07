@@ -11,6 +11,6 @@ const service: MotoristaService = new MotoristaService(repository);
 const controller: MotoristaController = new MotoristaController(service);
 
 motoristaRouter.post('/criar', controller.criarMotorista);
-
+motoristaRouter.put('/atualizar/:id', controller.atualizarMotorista);
 
 export default motoristaRouter;
