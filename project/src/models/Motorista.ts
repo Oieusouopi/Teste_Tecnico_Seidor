@@ -1,4 +1,4 @@
 export interface Motorista {
-    id: number;
+    id: number | null;
     nome: string;
 }
