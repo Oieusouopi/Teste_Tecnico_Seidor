@@ -45,5 +45,40 @@ describe('MotoristaService', () => {
 
     });
 
+    describe('atualizarMotorista', () => {
+
+        it('deve atualizar um motorista com sucesso', async () => {
+            const id = 1;
+
+            const motoristaAtualizar = { nome: 'João Atualizado' };
+            const motoristaAtualizado = { id: 1, nome: 'João Atualizado' };
+
+            mockRepository.atualizar = jest.fn().mockResolvedValueOnce(motoristaAtualizado);
+
+            const resultado = await service.atualizarMotorista(id, motoristaAtualizar);
+
+            expect(mockRepository.atualizar).toHaveBeenCalledWith(id, motoristaAtualizar);
+            expect(resultado).toEqual(motoristaAtualizado);
+        });
+
+        it('deve lançar erro se motorista for nulo', async () => {
+            await expect(service.atualizarMotorista(1, null as any))
+                .rejects
+                .toThrow('Dados do motorista são obrigatorios');
+
+            expect(mockRepository.atualizar).not.toHaveBeenCalled();
+        });
+
+        it('deve lançar erro se motorista for undefined', async () => {
+            await expect(service.atualizarMotorista(1, undefined as any))
+                .rejects
+                .toThrow('Dados do motorista são obrigatorios');
+
+            expect(mockRepository.atualizar).not.toHaveBeenCalled();
+        });
+
+    });
+
+
 
 });

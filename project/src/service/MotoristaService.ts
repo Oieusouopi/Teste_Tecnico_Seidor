@@ -1,3 +1,4 @@
+import { MotoristaAtualizarDTO } from "../dto/MotoristaAtualizarDTO";
 import { Motorista } from "../models/Motorista";
 import { IMotoristaRepository } from "../repositories/motorista/IMotoristaRepository";
 
@@ -16,4 +17,18 @@ export class MotoristaService {
 
         return await this.repository.criar(motoristaValido);
     }
+
+    public async atualizarMotorista(id: number, motorista: MotoristaAtualizarDTO) {
+        if (!motorista) {
+            throw new Error('Dados do motorista são obrigatorios');
+        }
+
+        const motoristaValido: MotoristaAtualizarDTO = {
+            nome: motorista.nome,
+        }
+
+        return await this.repository.atualizar(id, motoristaValido);
+    }
+
+    
 }
