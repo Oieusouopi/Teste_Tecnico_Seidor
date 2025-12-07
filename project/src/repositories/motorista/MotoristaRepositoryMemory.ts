@@ -1,4 +1,5 @@
 import { MotoristaAtualizarDTO } from "../../dto/MotoristaAtualizarDTO";
+import { MotoristaFiltroDTO } from "../../dto/MotoristaFiltroDTO";
 import { Motorista } from "../../models/Motorista";
 import { IMotoristaRepository } from "./IMotoristaRepository";
 
@@ -31,6 +32,18 @@ export class MotoristaRepositoryMemory implements IMotoristaRepository {
 
     public async listar(): Promise<Motorista[]> {
         return this.motoristas;
+    }
+
+    public async listarPorFiltro(motoristaFiltroDTO: MotoristaFiltroDTO): Promise<Motorista[]> {
+         const motoristas = this.motoristas.filter((m) => {
+            if (motoristaFiltroDTO.nome && m.nome !== motoristaFiltroDTO.nome) {
+                return false;
+            }
+
+            return true;
+        });
+
+        return motoristas;
     }
 
     public async buscarPorId(id: number): Promise<Motorista | null> {

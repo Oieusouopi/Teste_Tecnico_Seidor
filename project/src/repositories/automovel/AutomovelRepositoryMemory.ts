@@ -16,19 +16,18 @@ export class AutomovelRepositoryMemory implements IAutomovelRepository {
     }
 
     public async listarPorFiltos(automovelFiltroDTO: AutomovelFiltroDTO): Promise<Automovel[]> {
-        const automoveis = this.automoveis.filter((a) => {
-            if (automovelFiltroDTO.cor && a.cor !== automovelFiltroDTO.cor) {
-                return false;
-            }
+        const { marca, cor } = automovelFiltroDTO;
+        
+        if (!marca && !cor) {
+            return this.automoveis;
+        }
 
-            if (automovelFiltroDTO.marca && a.marca !== automovelFiltroDTO.marca) {
-                return false;
-            }
+        return this.automoveis.filter(a => {
+            const marcaOK = !marca || a.marca === marca;
+            const corOK = !cor || a.cor === cor;
 
-            return true;
+            return marcaOK && corOK;
         });
-
-        return automoveis;
     }
 
     public async buscarPorPlaca(placa: string): Promise<Automovel | null> {

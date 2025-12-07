@@ -7,6 +7,7 @@ const mockRepository: jest.Mocked<IMotoristaRepository> = {
     deletar: jest.fn(),
     listar: jest.fn(),
     buscarPorId: jest.fn(),
+    listarPorFiltro: jest.fn(),
 };
 
 describe('MotoristaService', () => {

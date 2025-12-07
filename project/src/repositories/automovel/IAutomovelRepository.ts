@@ -5,8 +5,8 @@ import { Automovel } from "../../models/Automovel";
 export interface IAutomovelRepository {
     criar(automovel: Automovel): Promise<Automovel>;
     listar(): Promise<Automovel[]>;
+    listarPorFiltos(automovelFiltroDTO: AutomovelFiltroDTO): Promise<Automovel[]>;
     buscarPorPlaca(placa: string): Promise<Automovel | null>;
     atualizar(placa: string, automovel: AutomovelAtualizarDTO): Promise<Automovel>;
     deletar(placa: string): Promise<void>;
-    listarPorFiltos(automovelFiltroDTO: AutomovelFiltroDTO): Promise<Automovel[]>;
 }
