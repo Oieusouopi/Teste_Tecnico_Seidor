@@ -148,5 +148,51 @@ describe('MotoristaService', () => {
 
     });
 
+    describe('listarPorFiltro', () => {
+
+        it('deve chamar o repository com o nome tratado (trim)', async () => {
+            mockRepository.listarPorFiltro.mockResolvedValueOnce([]);
+
+            await service.listarPorFiltro({ nome: "  Rafael  " });
+
+            expect(mockRepository.listarPorFiltro).toHaveBeenCalledWith({
+                nome: "Rafael"
+            });
+        });
+
+        it('deve transformar string vazia em null', async () => {
+            mockRepository.listarPorFiltro.mockResolvedValueOnce([]);
+
+            await service.listarPorFiltro({ nome: "" });
+
+            expect(mockRepository.listarPorFiltro).toHaveBeenCalledWith({
+                nome: null
+            });
+        });
+
+        it('deve transformar nome undefined em null', async () => {
+            mockRepository.listarPorFiltro.mockResolvedValueOnce([]);
+
+            await service.listarPorFiltro({ nome: undefined as any });
+
+            expect(mockRepository.listarPorFiltro).toHaveBeenCalledWith({
+                nome: null
+            });
+        });
+
+        it('deve retornar a lista enviada pelo repository', async () => {
+            const listaMock = [
+                { id: 1, nome: 'Rafael' }
+            ];
+
+            mockRepository.listarPorFiltro.mockResolvedValueOnce(listaMock);
+
+            const resultado = await service.listarPorFiltro({ nome: "Rafael" });
+
+            expect(resultado).toEqual(listaMock);
+        });
+
+    });
+
 
 });
