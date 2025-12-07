@@ -5,7 +5,8 @@ import { IAutomovelRepository } from "../../../repositories/automovel/IAutomovel
 const mockRepository: jest.Mocked<IAutomovelRepository> = {
     criar: jest.fn(),
     buscarPorPlaca: jest.fn(),
-    listar: jest.fn()
+    listar: jest.fn(),
+    atualizar: jest.fn(),
 };
 
 describe('AutomovelService', () => {
@@ -19,7 +20,6 @@ describe('AutomovelService', () => {
     it('deve criar um automóvel com sucesso', async () => {
         const automovel: Automovel = { placa: 'ABC-1234', marca: 'Fiat Uno', cor: "azul" };
 
-        // Agora funciona
         mockRepository.buscarPorPlaca.mockResolvedValueOnce(null);
         mockRepository.criar.mockResolvedValueOnce(automovel);
 
@@ -50,5 +50,11 @@ describe('AutomovelService', () => {
         await expect(service.criarAutomovel(automovel))
             .rejects
             .toThrow('Automóvel já existe');
+    });
+
+    it('deve atualizar um automóvel com sucesso', async () => {
+        const automovel: Automovel = { placa: 'ABC-1234', marca: 'Fiat palio', cor: 'verde' };
+
+        
     });
 });

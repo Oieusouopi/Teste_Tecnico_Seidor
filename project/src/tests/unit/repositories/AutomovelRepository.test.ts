@@ -42,4 +42,29 @@ describe('AutomovelRepositoryMemory', () => {
         });
     });
 
+    describe('atualizar', () => {
+        it('deve atualizar o automóvel', async () => {
+            const automovel: Automovel = {
+                marca: 'Fiat',
+                placa: 'ABC-1234',
+                cor: 'Azul',
+            };
+
+            await repository.criar(automovel);
+
+            const automovelAtualizado: Automovel = {
+                marca: 'Fiat',
+                placa: 'ABC-1234',
+                cor: 'Vermelho',
+            };
+
+            const resultado = await repository.atualizar(automovelAtualizado);
+
+            expect(resultado).toEqual(automovelAtualizado);
+
+            const doRepositorio = await repository.buscarPorPlaca('ABC-1234');
+            expect(doRepositorio).toEqual(automovelAtualizado);
+        });
+    });
+
 });

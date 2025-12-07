@@ -17,4 +17,10 @@ export class AutomovelRepositoryMemory implements IAutomovelRepository {
         const automovel = this.automoveis.find(a => a.placa == placa);
         return automovel || null;
     }
+
+    public async atualizar(automovel: Automovel): Promise<Automovel> {
+        const index = this.automoveis.findIndex(a => a.placa === automovel.placa);
+        this.automoveis[index] = automovel;
+        return automovel;
+    }
 }
