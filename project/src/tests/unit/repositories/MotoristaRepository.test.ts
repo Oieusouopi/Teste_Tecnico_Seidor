@@ -58,5 +58,31 @@ describe('MotoristaRepositoryMemory', () => {
         });
     });
 
+    describe('buscarPorId', () => {
+
+        it('deve retornar o motorista correspondente ao id', async () => {
+            const motorista1: Motorista = { id: 1, nome: "Rafael" };
+            const motorista2: Motorista = { id: 2, nome: "João" };
+
+            await repository.criar(motorista1);
+            await repository.criar(motorista2);
+
+            const resultado = await repository.buscarPorId(2);
+
+            expect(resultado).toEqual(motorista2);
+        });
+
+        it('deve retornar null se o motorista não existir', async () => {
+            const motorista1: Motorista = { id: 1, nome: "Rafael" };
+
+            await repository.criar(motorista1);
+
+            const resultado = await repository.buscarPorId(999); // id inexistente
+
+            expect(resultado).toBeNull();
+        });
+
+    });
+
 
 });

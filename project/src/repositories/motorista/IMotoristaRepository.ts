@@ -6,4 +6,5 @@ export interface IMotoristaRepository {
     atualizar(id: number, motoristas: MotoristaAtualizarDTO): Promise<Motorista>;
     listar(): Promise<Motorista[]>;
     deletar(id: number): Promise<void>;
+    buscarPorId(id: number): Promise<Motorista | null>;
 }

@@ -32,4 +32,10 @@ export class MotoristaRepositoryMemory implements IMotoristaRepository {
     public async listar(): Promise<Motorista[]> {
         return this.motoristas;
     }
+
+    public async buscarPorId(id: number): Promise<Motorista | null> {
+        const motorista = this.motoristas.find(m => m.id == id);
+
+        return motorista || null;
+    }
 }
