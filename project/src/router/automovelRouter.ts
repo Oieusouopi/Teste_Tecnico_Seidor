@@ -17,6 +17,6 @@ automovelRouter.delete('/deletar/:placa', controller.deletarAutomovel);
 
 automovelRouter.get('/buscarPorPlaca/:placa', controller.buscarPorPlaca);
 
-automovelRouter.get('/listarPorFioltr', controller.listarPorFiltro);
+automovelRouter.get('/listarPorFiltro', controller.listarPorFiltro);
 
 export default automovelRouter;

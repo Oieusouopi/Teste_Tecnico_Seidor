@@ -3,6 +3,7 @@ import { AutomovelService } from "../../../service/AutomovelService";
 import { Request, Response } from "express";
 import { Automovel } from "../../../models/Automovel";
 import { AutomovelAtualizarDTO } from "../../../dto/AutomovelAtualizarDTO";
+import { AutomovelFiltroDTO } from "../../../dto/AutomovelFiltroDTO";
 
 describe('AutomovelController', () => {
     let controller: AutomovelController;
@@ -175,6 +176,55 @@ describe('AutomovelController', () => {
         });
     });
 
+    describe('listarPorFiltro', () => {
+        it('deve retornar a lista filtrada de automóveis', async () => {
+            const filtro: AutomovelFiltroDTO = {
+                marca: 'Fiat',
+                cor: 'Azul'
+            };
+
+            const automoveis: Automovel[] = [
+                { placa: 'ABC-1234', marca: 'Fiat', cor: 'Azul' }
+            ];
+
+            mockReq.body = filtro;
+
+            (mockService.listarPorFiltro as jest.Mock) = jest.fn().mockResolvedValueOnce(automoveis);
+
+            await controller.listarPorFiltro(mockReq as Request, mockRes as Response);
+
+            expect(mockService.listarPorFiltro).toHaveBeenCalledWith(filtro);
+            expect(statusMock).toHaveBeenCalledWith(200);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: true,
+                dados: automoveis
+            });
+        });
+
+        it('deve retornar erro caso o service lance erro', async () => {
+            const filtro: AutomovelFiltroDTO = {
+                marca: 'Ford',
+                cor: 'Vermelho'
+            };
+
+            const erro = new Error('Filtro inválido');
+
+            mockReq.body = filtro;
+
+            (mockService.listarPorFiltro as jest.Mock) = jest
+                .fn()
+                .mockRejectedValueOnce(erro);
+
+            await controller.listarPorFiltro(mockReq as Request, mockRes as Response);
+
+            expect(mockService.listarPorFiltro).toHaveBeenCalledWith(filtro);
+            expect(statusMock).toHaveBeenCalledWith(400);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: false,
+                error: 'Filtro inválido'
+            });
+        });
+    });
 
 
 });
