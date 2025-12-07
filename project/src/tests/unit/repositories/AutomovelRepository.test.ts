@@ -42,6 +42,28 @@ describe('AutomovelRepositoryMemory', () => {
         });
     });
 
+    describe('listar', () => {
+        it('Listar sem nenhum automovel', async () => {
+            const resultado = await repository.listar();
+
+            expect(resultado).toEqual([]);
+        });
+
+        it('Listar com um automóvel', async () => {
+            const automovel: Automovel = {
+                marca: 'Fiat',
+                placa: 'ABC-1234',
+                cor: 'Azul',
+            };
+
+            await repository.criar(automovel);
+
+            const resultado = await repository.listar();
+
+            expect(resultado.length).toEqual(1);
+        })
+    });
+
     describe('atualizar', () => {
         it('deve atualizar o automóvel', async () => {
             const automovel: Automovel = {
