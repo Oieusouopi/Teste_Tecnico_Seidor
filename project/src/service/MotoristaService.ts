@@ -30,5 +30,9 @@ export class MotoristaService {
         return await this.repository.atualizar(id, motoristaValido);
     }
 
-    
+    public async deletar(id: number): Promise<void> {
+        return this.repository.deletar(id);
+    }
+
+
 }

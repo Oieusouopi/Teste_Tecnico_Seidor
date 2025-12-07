@@ -81,6 +81,35 @@ describe('MotoristaService', () => {
 
     });
 
+    describe('deletar', () => {
+
+        it('deve chamar o repositório para deletar o motorista', async () => {
+            const id = 1;
+
+            mockRepository.deletar.mockResolvedValueOnce();
+
+            await service.deletar(id);
+
+            expect(mockRepository.deletar).toHaveBeenCalledWith(id);
+        });
+
+        it('deve aceitar id undefined e repassar ao repositório', async () => {
+            mockRepository.deletar.mockResolvedValueOnce();
+
+            await service.deletar(undefined as any);
+
+            expect(mockRepository.deletar).toHaveBeenCalledWith(undefined);
+        });
+
+        it('deve aceitar id null e repassar ao repositório', async () => {
+            mockRepository.deletar.mockResolvedValueOnce();
+
+            await service.deletar(null as any);
+
+            expect(mockRepository.deletar).toHaveBeenCalledWith(null);
+        });
+
+    });
 
 
 });
