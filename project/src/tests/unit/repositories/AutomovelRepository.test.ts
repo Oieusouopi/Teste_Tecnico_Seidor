@@ -89,4 +89,32 @@ describe('AutomovelRepositoryMemory', () => {
         });
     });
 
+    describe('deletar', () => {
+
+        it('deletar um automóvel com sucesso', async () => {
+            const automovel: Automovel = {
+                    marca: 'Fiat',
+                    placa: 'ABC-1234',
+                    cor: 'Azul',
+                };
+
+                await repository.criar(automovel);
+
+                let lista = await repository.listar();
+                expect(lista.length).toBe(1);
+
+                await repository.deletar('ABC-1234');
+
+                lista = await repository.listar();
+                expect(lista.length).toBe(0);
+
+                const resultado = await repository.buscarPorPlaca('ABC-1234');
+                expect(resultado).toBeNull();
+        });
+
+        it('não deve falhar se a placa não existir', async () => {
+            await expect(repository.deletar('XYZ-9999')).resolves.not.toThrow();
+        });
+    })
+
 });

@@ -97,5 +97,11 @@ describe('AutomovelController', () => {
         });
     });
 
+    describe('deletar', () => {
+        it('deletar um automóvel com sucesso', async () => {
+
+        })
+    });
+
 
 });
