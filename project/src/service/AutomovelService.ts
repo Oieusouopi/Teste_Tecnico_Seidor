@@ -48,4 +48,8 @@ export class AutomovelService {
 
         return await this.repository.atualizar(automovelValido);
     }
+
+    public async deletar(placa: string): Promise<void> {
+        return await this.repository.deletar(placa);
+    }
 }

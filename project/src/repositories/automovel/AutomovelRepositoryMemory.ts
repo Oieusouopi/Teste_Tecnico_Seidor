@@ -23,4 +23,8 @@ export class AutomovelRepositoryMemory implements IAutomovelRepository {
         this.automoveis[index] = automovel;
         return automovel;
     }
+
+    public async deletar(placa: string): Promise<void> {
+        this.automoveis = this.automoveis.filter(a => a.placa != placa);
+    }
 }

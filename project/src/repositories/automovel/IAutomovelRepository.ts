@@ -5,4 +5,5 @@ export interface IAutomovelRepository {
     listar(): Promise<Automovel[]>;
     buscarPorPlaca(placa: string): Promise<Automovel | null>;
     atualizar(Automovel: Automovel): Promise<Automovel>;
+    deletar(placa: string): Promise<void>
 }
