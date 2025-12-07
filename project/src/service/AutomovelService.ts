@@ -1,4 +1,5 @@
 import { AutomovelAtualizarDTO } from "../dto/AutomovelAtualizarDTO";
+import { AutomovelFiltroDTO } from "../dto/AutomovelFiltroDTO";
 import { Automovel } from "../models/Automovel";
 import { IAutomovelRepository } from "../repositories/automovel/IAutomovelRepository";
 
@@ -60,5 +61,15 @@ export class AutomovelService {
         }
 
         return automovel;
+    }
+
+    public async listarPorFiltro(automovelFiltroDTO: AutomovelFiltroDTO): Promise<Automovel[]> {
+
+        const filtroTratado = {
+            cor: automovelFiltroDTO.cor?.trim() || null,
+            marca: automovelFiltroDTO.marca?.trim() || null
+        };
+
+        return await this.repository.listarPorFiltos(filtroTratado);
     }
 }

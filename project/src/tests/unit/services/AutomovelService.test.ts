@@ -144,4 +144,73 @@ describe('AutomovelService', () => {
         });
     });
 
+    describe('listarPorFiltro', () => {
+    beforeEach(() => {
+        mockRepository.listarPorFiltos = jest.fn();
+    });
+
+    it('deve retornar todos os automóveis se não houver filtros', async () => {
+        const automoveis: Automovel[] = [
+            { placa: 'ABC-1234', marca: 'Fiat', cor: 'Azul' },
+            { placa: 'DEF-5678', marca: 'Ford', cor: 'Vermelho' }
+        ];
+
+        mockRepository.listarPorFiltos.mockResolvedValueOnce(automoveis);
+
+        const resultado = await service.listarPorFiltro({marca: null, cor: null});
+
+        expect(mockRepository.listarPorFiltos).toHaveBeenCalledWith({ cor: null, marca: null });
+        expect(resultado).toEqual(automoveis);
+    });
+
+    it('deve filtrar por cor', async () => {
+        const automoveis: Automovel[] = [
+            { placa: 'ABC-1234', marca: 'Fiat', cor: 'Azul' }
+        ];
+
+        mockRepository.listarPorFiltos.mockResolvedValueOnce(automoveis);
+
+        const resultado = await service.listarPorFiltro({ cor: 'Azul', marca: '' });
+
+        expect(mockRepository.listarPorFiltos).toHaveBeenCalledWith({ cor: 'Azul', marca: null });
+        expect(resultado).toEqual(automoveis);
+    });
+
+    it('deve filtrar por marca', async () => {
+        const automoveis: Automovel[] = [
+            { placa: 'DEF-5678', marca: 'Ford', cor: 'Vermelho' }
+        ];
+
+        mockRepository.listarPorFiltos.mockResolvedValueOnce(automoveis);
+
+        const resultado = await service.listarPorFiltro({ cor: '', marca: 'Ford' });
+
+        expect(mockRepository.listarPorFiltos).toHaveBeenCalledWith({ cor: null, marca: 'Ford' });
+        expect(resultado).toEqual(automoveis);
+    });
+
+    it('deve filtrar por marca e cor', async () => {
+        const automoveis: Automovel[] = [
+            { placa: 'ABC-1234', marca: 'Fiat', cor: 'Azul' }
+        ];
+
+        mockRepository.listarPorFiltos.mockResolvedValueOnce(automoveis);
+
+        const resultado = await service.listarPorFiltro({ cor: 'Azul', marca: 'Fiat' });
+
+        expect(mockRepository.listarPorFiltos).toHaveBeenCalledWith({ cor: 'Azul', marca: 'Fiat' });
+        expect(resultado).toEqual(automoveis);
+    });
+
+    it('deve retornar vazio se nenhum automóvel corresponder', async () => {
+        mockRepository.listarPorFiltos.mockResolvedValueOnce([]);
+
+        const resultado = await service.listarPorFiltro({ cor: 'Preto', marca: 'Chevrolet' });
+
+        expect(mockRepository.listarPorFiltos).toHaveBeenCalledWith({ cor: 'Preto', marca: 'Chevrolet' });
+        expect(resultado).toEqual([]);
+    });
+    });
+
+
 });
