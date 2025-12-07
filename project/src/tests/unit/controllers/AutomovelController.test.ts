@@ -62,6 +62,40 @@ describe('AutomovelController', () => {
                 erro: 'Placa já existe'
             });
         });
-    })
+    });
+
+    describe('atualizar', () => {
+        it('deve atualizar um automóvel com sucesso', async () => {
+            const automovelAtualizado: Automovel = { placa: 'ABC-1234', marca: 'Fiat Uno', cor: 'vermelho' };
+            mockReq.body = automovelAtualizado;
+
+            (mockService.atualizar as jest.Mock) = jest.fn().mockResolvedValueOnce(automovelAtualizado);
+
+            await controller.atualizarAutomovel(mockReq as Request, mockRes as Response);
+
+            expect(mockService.atualizar).toHaveBeenCalledWith(automovelAtualizado);
+            expect(statusMock).toHaveBeenCalledWith(201);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: true,
+                dados: automovelAtualizado
+            });
+        });
+
+        it('deve retornar erro se o serviço lançar exceção', async () => {
+            const erro = new Error('Automóvel não encontrado');
+            mockReq.body = { placa: 'XYZ-9999' };
+
+            (mockService.atualizar as jest.Mock) = jest.fn().mockRejectedValueOnce(erro);
+
+            await controller.atualizarAutomovel(mockReq as Request, mockRes as Response);
+
+            expect(statusMock).toHaveBeenCalledWith(400);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: false,
+                error: 'Automóvel não encontrado'
+            });
+        });
+    });
+
 
 });

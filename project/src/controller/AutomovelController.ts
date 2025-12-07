@@ -4,7 +4,7 @@ import { AutomovelService } from "../service/AutomovelService";
 export class AutomovelController  {
     constructor(private service: AutomovelService) {}
 
-     public criarAutomovel = async (req: Request, res: Response): Promise<void> => {
+    public criarAutomovel = async (req: Request, res: Response): Promise<void> => {
         try {
             const dados = req.body;
             const automovel = await this.service.criarAutomovel(dados);
@@ -18,6 +18,23 @@ export class AutomovelController  {
                 sucesso: false,
                 erro: error instanceof Error ? error.message : 'Erro desconhecido'
             });
+        }
+    }
+
+    public atualizarAutomovel = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const dados = req.body;
+            const automovel = await this.service.atualizar(dados);
+
+            res.status(201).json({
+                sucesso: true,
+                dados: automovel
+            })
+        } catch (error) {
+            res.status(400).json({
+                sucesso: false,
+                error: error instanceof Error ? error.message : 'Erro desconhecido'
+            })
         }
     }
 
