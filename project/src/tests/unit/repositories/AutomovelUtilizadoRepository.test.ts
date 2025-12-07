@@ -9,7 +9,7 @@ describe('AutomovelUtilizadoRepository', () => {
         repository = new AutomovelUtilizadoRepositoryMemory();
     });
 
-    describe('utilizarAutomovel', () => {
+    describe('criarAutomovelUtilizado', () => {
 
         it('deve criar um automóvel utilizado corretamente', async () => {
 
@@ -29,7 +29,7 @@ describe('AutomovelUtilizadoRepository', () => {
                 }
             };
 
-            const resultado = await repository.utilizarAutomovel(automovelUtilizado);
+            const resultado = await repository.criarAutomovelUtilizado(automovelUtilizado);
 
             // deve retornar o próprio objeto
             expect(resultado).toEqual(automovelUtilizado);

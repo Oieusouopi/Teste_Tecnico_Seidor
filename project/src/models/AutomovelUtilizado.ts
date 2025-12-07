@@ -2,7 +2,7 @@ import { Automovel } from "./Automovel";
 import { Motorista } from "./Motorista";
 
 export interface AutomovelUtilizado {
-    id: number;
+    id: number | null;
     dataInicioUtilizacao: Date;
     dataFinalUtilizacao: Date;
     motorista: Motorista;
