@@ -3,6 +3,7 @@ import { MotoristaService } from "../../../service/MotoristaService";
 
 const mockRepository: jest.Mocked<IMotoristaRepository> = {
     criar: jest.fn(),
+    atualizar: jest.fn(),
 };
 
 describe('MotoristaService', () => {

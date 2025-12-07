@@ -21,4 +21,27 @@ describe('MotoristaRepositoryMemory', () => {
         });
     });
 
+    describe('atualizar', () => {
+        it('deve atualizar um motorista com sucesso', async () => {
+            const motoristaOriginal: Motorista = {
+                id: 1,
+                nome: "João"
+            };
+
+            await repository.criar(motoristaOriginal);
+
+            const motoristaAtualizado = {
+                nome: "João da Silva"
+            };
+
+            const resultado = await repository.atualizar(1, motoristaAtualizado);
+
+            expect(resultado).toEqual({
+                id: 1,
+                nome: "João da Silva"
+            });
+        });
+    });
+
+
 });

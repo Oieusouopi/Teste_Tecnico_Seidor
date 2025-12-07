@@ -1,3 +1,4 @@
+import { MotoristaAtualizarDTO } from "../../dto/MotoristaAtualizarDTO";
 import { Motorista } from "../../models/Motorista";
 import { IMotoristaRepository } from "./IMotoristaRepository";
 
@@ -13,5 +14,14 @@ export class MotoristaRepositoryMemory implements IMotoristaRepository {
 
         this.motoristas.push(motorista);
         return motorista;
+    }
+
+    public async atualizar(id: number, motoristaAtualizado: MotoristaAtualizarDTO): Promise<Motorista> {
+        const index = this.motoristas.findIndex(m => m.id === id);
+
+        const motoristaExistente: Motorista = this.motoristas[index];
+        Object.assign(motoristaExistente, motoristaAtualizado);
+
+        return motoristaExistente;
     }
 }
