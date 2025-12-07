@@ -112,5 +112,40 @@ describe('MotoristaService', () => {
 
     });
 
+    describe('buscarPorId', () => {
+
+        it('deve retornar o motorista quando o id existir', async () => {
+            const motorista = { id: 1, nome: 'Rafael' };
+
+            mockRepository.buscarPorId = jest.fn().mockResolvedValueOnce(motorista);
+
+            const resultado = await service.buscarPorId(1);
+
+            expect(mockRepository.buscarPorId).toHaveBeenCalledWith(1);
+            expect(resultado).toEqual(motorista);
+        });
+
+        it('deve lançar erro quando o motorista não existir', async () => {
+            mockRepository.buscarPorId = jest.fn().mockResolvedValueOnce(null);
+
+            await expect(service.buscarPorId(999))
+                .rejects
+                .toThrow('Automovel não existe');
+
+            expect(mockRepository.buscarPorId).toHaveBeenCalledWith(999);
+        });
+
+        it('deve lançar erro quando o repositório retornar undefined', async () => {
+            mockRepository.buscarPorId = jest.fn().mockResolvedValueOnce(undefined);
+
+            await expect(service.buscarPorId(5))
+                .rejects
+                .toThrow('Automovel não existe');
+
+            expect(mockRepository.buscarPorId).toHaveBeenCalledWith(5);
+        });
+
+    });
+
 
 });
