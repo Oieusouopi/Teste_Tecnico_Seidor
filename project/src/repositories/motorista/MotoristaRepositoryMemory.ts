@@ -24,4 +24,12 @@ export class MotoristaRepositoryMemory implements IMotoristaRepository {
 
         return motoristaExistente;
     }
+
+    public async deletar(id: number): Promise<void> {
+        this.motoristas = this.motoristas.filter(m => m.id != id);
+    }
+
+    public async listar(): Promise<Motorista[]> {
+        return this.motoristas;
+    }
 }

@@ -43,5 +43,20 @@ describe('MotoristaRepositoryMemory', () => {
         });
     });
 
+    describe('deletar', () => {
+        it('deve deletar um motorista pelo id', async () => {
+            const motorista1: Motorista = { id: 1, nome: "Rafael" };
+            const motorista2: Motorista = { id: 2, nome: "João" };
+
+            await repository.criar(motorista1);
+            await repository.criar(motorista2);
+
+            await repository.deletar(1);
+
+            const lista = await repository.listar();
+            expect(lista).toEqual([motorista2]);
+        });
+    });
+
 
 });
