@@ -84,5 +84,48 @@ describe('MotoristaRepositoryMemory', () => {
 
     });
 
+   describe('listarPorFiltro', () => {
+
+        it('deve retornar todos os motoristas quando nenhum filtro for aplicado', async () => {
+            const motorista1: Motorista = { id: 1, nome: "Rafael" };
+            const motorista2: Motorista = { id: 2, nome: "João" };
+            const motorista3: Motorista = { id: 3, nome: "Maria" };
+
+            await repository.criar(motorista1);
+            await repository.criar(motorista2);
+            await repository.criar(motorista3);
+
+            const resultado = await repository.listarPorFiltro({ nome: null});
+
+            expect(resultado).toEqual([motorista1, motorista2, motorista3]);
+        });
+
+        it('deve filtrar corretamente por nome', async () => {
+            const motorista1: Motorista = { id: 1, nome: "Rafael" };
+            const motorista2: Motorista = { id: 2, nome: "João" };
+            const motorista3: Motorista = { id: 3, nome: "Rafael" };
+
+            await repository.criar(motorista1);
+            await repository.criar(motorista2);
+            await repository.criar(motorista3);
+
+            const resultado = await repository.listarPorFiltro({ nome: "Rafael" });
+
+            expect(resultado).toEqual([motorista1, motorista3]);
+        });
+
+        it('deve retornar lista vazia quando nenhum motorista corresponder ao filtro', async () => {
+            const motorista1: Motorista = { id: 1, nome: "Rafael" };
+            const motorista2: Motorista = { id: 2, nome: "João" };
+
+            await repository.criar(motorista1);
+            await repository.criar(motorista2);
+
+            const resultado = await repository.listarPorFiltro({ nome: "Maria" });
+
+            expect(resultado).toEqual([]);
+        });
+
+    });
 
 });
