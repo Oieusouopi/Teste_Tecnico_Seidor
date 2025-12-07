@@ -18,6 +18,34 @@ export class AutomovelService {
             throw new Error('Automóvel já existe');
         }
 
-        return await this.repository.criar(automovel);
+        const automovelValido: Automovel = {
+            placa: automovel.placa,
+            marca: automovel.marca,
+            cor: automovel.cor,
+        }
+
+        return await this.repository.criar(automovelValido);
+    }
+
+    public async atualizar(automovel: Automovel): Promise<Automovel> {
+        if (!automovel) {
+            throw new Error('Dados do automóvel são obrigatórios');
+        }
+
+        if (!automovel.placa) {
+            throw new Error('Automovel sem placa');
+        }
+
+        if (await this.repository.buscarPorPlaca(automovel.placa) != null) {
+            throw new Error('Automovel já existe');
+        }
+
+        const automovelValido: Automovel = {
+            placa: automovel.placa,
+            marca: automovel.marca,
+            cor: automovel.cor,
+        }
+
+        return await this.repository.atualizar(automovelValido);
     }
 }
