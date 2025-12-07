@@ -2,6 +2,7 @@ import { AutomovelController } from "../../../controller/AutomovelController";
 import { AutomovelService } from "../../../service/AutomovelService";
 import { Request, Response } from "express";
 import { Automovel } from "../../../models/Automovel";
+import { AutomovelAtualizarDTO } from "../../../dto/AutomovelAtualizarDTO";
 
 describe('AutomovelController', () => {
     let controller: AutomovelController;
@@ -66,24 +67,31 @@ describe('AutomovelController', () => {
 
     describe('atualizar', () => {
         it('deve atualizar um automóvel com sucesso', async () => {
-            const automovelAtualizado: Automovel = { placa: 'ABC-1234', marca: 'Fiat Uno', cor: 'vermelho' };
-            mockReq.body = automovelAtualizado;
+            const automovelAtualizado: AutomovelAtualizarDTO = { marca: 'Fiat Uno', cor: 'vermelho' };
+            const automovelRetorno: Automovel = { placa: 'ABC-1234', marca: 'Fiat Uno', cor: 'vermelho' }
+            const placa = 'ABC-1234';
+            mockReq = {
+                body: automovelAtualizado,
+                params: { placa }
+            };
 
-            (mockService.atualizar as jest.Mock) = jest.fn().mockResolvedValueOnce(automovelAtualizado);
+            (mockService.atualizar as jest.Mock) = jest.fn().mockResolvedValueOnce(automovelRetorno);
 
             await controller.atualizarAutomovel(mockReq as Request, mockRes as Response);
 
-            expect(mockService.atualizar).toHaveBeenCalledWith(automovelAtualizado);
+            expect(mockService.atualizar).toHaveBeenCalledWith(placa, automovelAtualizado);
             expect(statusMock).toHaveBeenCalledWith(201);
             expect(jsonMock).toHaveBeenCalledWith({
                 sucesso: true,
-                dados: automovelAtualizado
+                dados: automovelRetorno
             });
         });
 
         it('deve retornar erro se o serviço lançar exceção', async () => {
             const erro = new Error('Automóvel não encontrado');
-            mockReq.body = { placa: 'XYZ-9999' };
+            mockReq = {
+                 params: { placa: 'XYZ-9999' }
+            };
 
             (mockService.atualizar as jest.Mock) = jest.fn().mockRejectedValueOnce(erro);
 

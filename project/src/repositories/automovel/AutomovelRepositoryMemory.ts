@@ -1,3 +1,4 @@
+import { AutomovelAtualizarDTO } from "../../dto/AutomovelAtualizarDTO";
 import { Automovel } from "../../models/Automovel";
 import { IAutomovelRepository } from "./IAutomovelRepository";
 
@@ -18,10 +19,12 @@ export class AutomovelRepositoryMemory implements IAutomovelRepository {
         return automovel || null;
     }
 
-    public async atualizar(automovel: Automovel): Promise<Automovel> {
-        const index = this.automoveis.findIndex(a => a.placa === automovel.placa);
-        this.automoveis[index] = automovel;
-        return automovel;
+    public async atualizar(placa: string, automovelAtualizado: AutomovelAtualizarDTO): Promise<Automovel> {
+        const index = this.automoveis.findIndex(a => a.placa === placa);
+
+        const automovelExistente: Automovel = this.automoveis[index];
+        Object.assign(automovelExistente, automovelAtualizado);
+        return automovelExistente
     }
 
     public async deletar(placa: string): Promise<void> {

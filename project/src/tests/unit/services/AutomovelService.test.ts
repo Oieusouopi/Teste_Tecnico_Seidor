@@ -1,6 +1,7 @@
 import { AutomovelService } from "../../../service/AutomovelService";
 import { Automovel } from "../../../models/Automovel";
 import { IAutomovelRepository } from "../../../repositories/automovel/IAutomovelRepository";
+import { AutomovelAtualizarDTO } from "../../../dto/AutomovelAtualizarDTO";
 
 const mockRepository: jest.Mocked<IAutomovelRepository> = {
     criar: jest.fn(),
@@ -58,41 +59,44 @@ describe('AutomovelService', () => {
 
     describe('atualizar', () => {
         it('deve atualizar um automóvel com sucesso', async () => {
-            const automovel: Automovel = { placa: 'ABC-1234', marca: 'Fiat Palio', cor: 'verde' };
+            const automovel: AutomovelAtualizarDTO = { marca: 'Fiat Palio', cor: 'verde' };
+            const automovelEntidade: Automovel = { placa: 'ABC-1234',  marca: 'Fiat Palio', cor: 'verde' };
+            const placa = 'ABC-1234';
             
-            mockRepository.buscarPorPlaca.mockResolvedValueOnce(automovel);
-            mockRepository.atualizar.mockResolvedValueOnce(automovel);
+            mockRepository.buscarPorPlaca.mockResolvedValueOnce(automovelEntidade);
+            mockRepository.atualizar.mockResolvedValueOnce(automovelEntidade);
 
-            const result = await service.atualizar(automovel);
+            const result = await service.atualizar(placa, automovel);
 
             expect(mockRepository.buscarPorPlaca).toHaveBeenCalledWith('ABC-1234');
-            expect(mockRepository.atualizar).toHaveBeenCalledWith({
-                placa: 'ABC-1234',
+            expect(mockRepository.atualizar).toHaveBeenCalledWith('ABC-1234', {
                 marca: 'Fiat Palio',
                 cor: 'verde'
             });
-            expect(result).toEqual(automovel);
+            expect(result.cor).toEqual(automovel.cor);
+            expect(result.marca).toEqual(automovel.marca);
             
         });
 
         it('deve lançar erro se automóvel não for fornecido', async () => {
-            await expect(service.atualizar(null as any))
+            await expect(service.atualizar('', null as any))
                 .rejects
                 .toThrow('Dados do automóvel são obrigatórios');
         });
 
         it('deve lançar erro se automóvel não tiver placa', async () => {
-            const automovel: Automovel = { placa: '', marca: 'Fiat Palio', cor: 'verde' };
-            await expect(service.atualizar(automovel))
+            const automovel: AutomovelAtualizarDTO = { marca: 'Fiat Palio', cor: 'verde' };
+            await expect(service.atualizar('', automovel))
                 .rejects
                 .toThrow('Automovel sem placa');
         });
 
         it('deve lançar erro se automóvel não existir', async () => {
-            const automovel: Automovel = { placa: 'ABC-1234', marca: 'Fiat Palio', cor: 'verde' };
+            const automovel: AutomovelAtualizarDTO = { marca: 'Fiat Palio', cor: 'verde' };
+            const placa: string = 'ABC-1234';
             mockRepository.buscarPorPlaca.mockResolvedValueOnce(null);
 
-            await expect(service.atualizar(automovel))
+            await expect(service.atualizar(placa, automovel))
                 .rejects
                 .toThrow('Automovel não existe');
         });

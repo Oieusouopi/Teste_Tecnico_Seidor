@@ -1,5 +1,6 @@
 import { AutomovelRepositoryMemory } from '../../../repositories/automovel/AutomovelRepositoryMemory';
 import { Automovel } from '../../../models/Automovel';
+import { AutomovelAtualizarDTO } from '../../../dto/AutomovelAtualizarDTO';
 
 describe('AutomovelRepositoryMemory', () => {
     let repository: AutomovelRepositoryMemory;
@@ -66,6 +67,8 @@ describe('AutomovelRepositoryMemory', () => {
 
     describe('atualizar', () => {
         it('deve atualizar o automóvel', async () => {
+            
+
             const automovel: Automovel = {
                 marca: 'Fiat',
                 placa: 'ABC-1234',
@@ -74,18 +77,21 @@ describe('AutomovelRepositoryMemory', () => {
 
             await repository.criar(automovel);
 
-            const automovelAtualizado: Automovel = {
+            const automovelAtualizado: AutomovelAtualizarDTO = {
                 marca: 'Fiat',
-                placa: 'ABC-1234',
                 cor: 'Vermelho',
             };
 
-            const resultado = await repository.atualizar(automovelAtualizado);
+            const placa: string =  'ABC-1234';
 
-            expect(resultado).toEqual(automovelAtualizado);
+            const resultado = await repository.atualizar(placa,automovelAtualizado);
+
+            expect(resultado.cor).toEqual(automovelAtualizado.cor);
+            expect(resultado.marca).toEqual(automovelAtualizado.marca);
 
             const doRepositorio = await repository.buscarPorPlaca('ABC-1234');
-            expect(doRepositorio).toEqual(automovelAtualizado);
+            expect(doRepositorio?.cor).toEqual(automovelAtualizado.cor);
+            expect(doRepositorio?.marca).toEqual(automovelAtualizado.marca);
         });
     });
 

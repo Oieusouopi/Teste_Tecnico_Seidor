@@ -1,3 +1,4 @@
+import { AutomovelAtualizarDTO } from "../dto/AutomovelAtualizarDTO";
 import { Automovel } from "../models/Automovel";
 import { IAutomovelRepository } from "../repositories/automovel/IAutomovelRepository";
 
@@ -27,26 +28,25 @@ export class AutomovelService {
         return await this.repository.criar(automovelValido);
     }
 
-    public async atualizar(automovel: Automovel): Promise<Automovel> {
+    public async atualizar(placa: string, automovel: AutomovelAtualizarDTO): Promise<Automovel> {
         if (!automovel) {
             throw new Error('Dados do automóvel são obrigatórios');
         }
 
-        if (!automovel.placa) {
+        if (!placa) {
             throw new Error('Automovel sem placa');
         }
 
-        if (await this.repository.buscarPorPlaca(automovel.placa) == null) {
+        if (await this.repository.buscarPorPlaca(placa) == null) {
             throw new Error('Automovel não existe');
         }
 
-        const automovelValido: Automovel = {
-            placa: automovel.placa,
+        const automovelValido: AutomovelAtualizarDTO = {
             marca: automovel.marca,
             cor: automovel.cor,
         }
 
-        return await this.repository.atualizar(automovelValido);
+        return await this.repository.atualizar(placa, automovelValido);
     }
 
     public async deletar(placa: string): Promise<void> {
