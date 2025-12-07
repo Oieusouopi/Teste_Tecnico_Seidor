@@ -1,0 +1,11 @@
+services:
+  api:
+    build: .
+    container_name: api-dev
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: ["npm", "run", "dev"]

@@ -36,8 +36,8 @@ export class AutomovelService {
             throw new Error('Automovel sem placa');
         }
 
-        if (await this.repository.buscarPorPlaca(automovel.placa) != null) {
-            throw new Error('Automovel já existe');
+        if (await this.repository.buscarPorPlaca(automovel.placa) == null) {
+            throw new Error('Automovel não existe');
         }
 
         const automovelValido: Automovel = {
