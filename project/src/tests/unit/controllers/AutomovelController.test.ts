@@ -139,8 +139,42 @@ describe('AutomovelController', () => {
     });
 
     describe('buscarPorPlaca', () => {
-        
-    })
+        it('deve retornar o automóvel se existir', async () => {
+            const placa = 'ABC-1234';
+            const automovel: Automovel = { placa, marca: 'Fiat Uno', cor: 'azul' };
+            mockReq.params = { placa };
+
+            // Mock do service
+            (mockService.buscarPorPlaca as jest.Mock) = jest.fn().mockResolvedValueOnce(automovel);
+
+            await controller.buscarPorPlaca(mockReq as Request, mockRes as Response);
+
+            expect(mockService.buscarPorPlaca).toHaveBeenCalledWith(placa);
+            expect(statusMock).toHaveBeenCalledWith(200);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: true,
+                dados: automovel
+            });
+        });
+
+        it('deve retornar erro se o automóvel não existir', async () => {
+            const placa = 'XYZ-9999';
+            const erro = new Error('Automovel não existe');
+            mockReq.params = { placa };
+            
+            (mockService.buscarPorPlaca as jest.Mock) = jest.fn().mockRejectedValueOnce(erro);
+
+            await controller.buscarPorPlaca(mockReq as Request, mockRes as Response);
+
+            expect(mockService.buscarPorPlaca).toHaveBeenCalledWith(placa);
+            expect(statusMock).toHaveBeenCalledWith(400);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: false,
+                error: 'Automovel não existe'
+            });
+        });
+    });
+
 
 
 });

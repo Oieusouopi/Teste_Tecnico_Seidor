@@ -58,4 +58,21 @@ export class AutomovelController  {
         }
     }
 
+    public buscarPorPlaca = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const placa: string = req.params.placa;
+            const resultado: Automovel = await this.service.buscarPorPlaca(placa);
+
+            res.status(200).json({
+                sucesso: true,
+                dados: resultado
+            })
+        } catch (error) {
+            res.status(400).json({
+                sucesso: false,
+                error: error instanceof Error ? error.message : 'Erro desconhecido'
+            })
+        }
+    }
+
 }

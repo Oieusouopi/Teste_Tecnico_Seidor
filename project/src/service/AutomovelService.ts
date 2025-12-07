@@ -53,7 +53,12 @@ export class AutomovelService {
         return await this.repository.deletar(placa);
     }
 
-    public async buscarPorPlaca(placa: string): Promise<Automovel | null> {
-        return await this.repository.buscarPorPlaca(placa);
+    public async buscarPorPlaca(placa: string): Promise<Automovel> {
+        const automovel = await this.repository.buscarPorPlaca(placa);
+        if (automovel == null) {
+            throw new Error('Automovel não existe');
+        }
+
+        return automovel;
     }
 }

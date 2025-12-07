@@ -15,4 +15,6 @@ automovelRouter.put('/atualizar/:placa', controller.atualizarAutomovel);
 
 automovelRouter.delete('/deletar/:placa', controller.deletarAutomovel);
 
+automovelRouter.get('/buscarPorPlaca/:placa', controller.buscarPorPlaca);
+
 export default automovelRouter;

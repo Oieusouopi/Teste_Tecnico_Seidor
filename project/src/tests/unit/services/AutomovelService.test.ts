@@ -133,12 +133,12 @@ describe('AutomovelService', () => {
             expect(mockRepository.buscarPorPlaca).toHaveBeenCalledWith(placa);
         });
 
-        it('deve retornar null se o automóvel não existir', async () => {
+        it('deve lançar erro se o automóvel não existir', async () => {
             const placa = 'XYZ-9999';
 
             mockRepository.buscarPorPlaca.mockResolvedValueOnce(null);
 
-            await expect(service.buscarPorPlaca(placa)).resolves.toBeNull();
+            await expect(service.buscarPorPlaca(placa)).rejects.toThrow('Automovel não existe');
             expect(mockRepository.buscarPorPlaca).toHaveBeenCalledWith(placa);
         });
     });
