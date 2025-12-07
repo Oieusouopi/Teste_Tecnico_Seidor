@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AutomovelService } from "../service/AutomovelService";
 
-export default class AutomovelController {
+export class AutomovelController  {
     constructor(private service: AutomovelService) {}
 
      public criarAutomovel = async (req: Request, res: Response): Promise<void> => {
