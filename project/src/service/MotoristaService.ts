@@ -1,4 +1,5 @@
 import { MotoristaAtualizarDTO } from "../dto/MotoristaAtualizarDTO";
+import { MotoristaFiltroDTO } from "../dto/MotoristaFiltroDTO";
 import { Motorista } from "../models/Motorista";
 import { IMotoristaRepository } from "../repositories/motorista/IMotoristaRepository";
 
@@ -44,5 +45,12 @@ export class MotoristaService {
         return motorista;
     }
 
+    public async listarPorFiltro(motoristaFiltroDTO: MotoristaFiltroDTO): Promise<Motorista[]> {
+        const filtroTratado = {
+            nome: motoristaFiltroDTO.nome?.trim() || null,
+        };
+
+        return await this.repository.listarPorFiltro(filtroTratado);
+    }
 
 }
