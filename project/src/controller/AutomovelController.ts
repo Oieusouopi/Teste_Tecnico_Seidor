@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { AutomovelService } from "../service/AutomovelService";
 import { Automovel } from "../models/Automovel";
 import { AutomovelAtualizarDTO } from "../dto/AutomovelAtualizarDTO";
+import { AutomovelFiltroDTO } from "../dto/AutomovelFiltroDTO";
 
 export class AutomovelController  {
     constructor(private service: AutomovelService) {}
@@ -73,6 +74,24 @@ export class AutomovelController  {
                 error: error instanceof Error ? error.message : 'Erro desconhecido'
             })
         }
+    }
+
+    public listarPorFiltro = async (req: Request, res: Response): Promise<void> => {
+        try {
+
+            const dados: AutomovelFiltroDTO = req.body;
+            const resultado: Automovel[] = await this.service.listarPorFiltro(dados);
+
+            res.status(200).json({
+                sucesso: true,
+                dados: resultado
+            })
+        } catch (error) {
+            res.status(400).json({
+                sucesso: false,
+                error: error instanceof Error ? error.message : 'Erro desconhecido'
+            })
+        }   
     }
 
 }
