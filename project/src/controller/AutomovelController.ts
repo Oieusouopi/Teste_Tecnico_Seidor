@@ -45,6 +45,10 @@ export class AutomovelController  {
         try {
             const placa: string = req.params.placa;
             await this.service.deletar(placa);
+            
+            res.status(200).json({
+                sucesso: true
+            })
 
         } catch (error) {
             res.status(400).json({

@@ -11,6 +11,8 @@ const controller = new AutomovelController(service);
 
 automovelRouter.post('/criar', controller.criarAutomovel);
 
-automovelRouter.put('/atualizar/:placa', controller.atualizarAutomovel)
+automovelRouter.put('/atualizar/:placa', controller.atualizarAutomovel);
+
+automovelRouter.delete('/deletar/:placa', controller.deletarAutomovel);
 
 export default automovelRouter;

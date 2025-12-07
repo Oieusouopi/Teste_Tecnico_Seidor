@@ -107,8 +107,35 @@ describe('AutomovelController', () => {
 
     describe('deletar', () => {
         it('deletar um automóvel com sucesso', async () => {
+            const placa = 'ABC-1234';
+            mockReq.params = { placa };
 
-        })
+            (mockService.deletar as jest.Mock) = jest.fn().mockResolvedValueOnce(undefined);
+
+            await controller.deletarAutomovel(mockReq as Request, mockRes as Response);
+
+            expect(mockService.deletar).toHaveBeenCalledWith(placa);
+            expect(statusMock).toHaveBeenCalledWith(200);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: true
+            });
+        });
+
+        it('deve retornar erro se o serviço lançar exceção', async () => {
+            const erro = new Error('Automóvel não encontrado');
+            const placa = 'XYZ-9999';
+            mockReq.params = { placa };
+
+            (mockService.deletar as jest.Mock) = jest.fn().mockRejectedValueOnce(erro);
+
+            await controller.deletarAutomovel(mockReq as Request, mockRes as Response);
+
+            expect(statusMock).toHaveBeenCalledWith(400);
+            expect(jsonMock).toHaveBeenCalledWith({
+                sucesso: false,
+                error: 'Automóvel não encontrado'
+            });
+        });
     });
 
 
