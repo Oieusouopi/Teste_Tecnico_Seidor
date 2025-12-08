@@ -27,7 +27,7 @@ export class AutomovelUtilizadoController {
         try {
 
             const motoristaId: number = Number(req.params.motoristaId);
-            this.service.finalizarUtilizacaoPor(motoristaId);
+            await this.service.finalizarUtilizacaoPor(motoristaId);
 
             res.status(201).json({
                 sucesso: true,
