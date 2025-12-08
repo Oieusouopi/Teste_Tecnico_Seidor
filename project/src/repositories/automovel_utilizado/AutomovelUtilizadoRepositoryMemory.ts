@@ -23,4 +23,11 @@ export class AutomovelUtilizadoRepositoryMemory implements IAutomovelUtilizadoRe
         return automovelUtilizado || null;
     }
 
+    public async finalizarUtilizacaoPor(motoristaId: number): Promise<void> {
+        const index = this.automoveisUtilizados.findIndex(a => a.motorista.id == motoristaId);
+
+        const automovelUtilizado = this.automoveisUtilizados[index];
+
+        automovelUtilizado.dataFinalUtilizacao = new Date();
+    }
 }

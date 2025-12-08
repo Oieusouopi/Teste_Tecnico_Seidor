@@ -59,4 +59,12 @@ export class AutomovelUtilizadoService {
 
         return this.repository.criarAutomovelUtilizado(automovelEntidade);
     }
+
+    public async finalizarUtilizacaoPor(motoristaId: number): Promise<void> {
+        if (await this.repository.buscarMotoristaUtilizandoCarroPor(motoristaId) == null) {
+            throw new Error('Motorista não esta utilizando algum automóvel');
+        }
+
+        return this.repository.finalizarUtilizacaoPor(motoristaId);
+    }
 }

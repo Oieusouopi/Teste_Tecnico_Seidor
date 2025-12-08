@@ -16,7 +16,24 @@ export class AutomovelUtilizadoController {
                 dados: automovelUtilizado
             });
         } catch (error) {
-             res.status(400).json({
+            res.status(400).json({
+                sucesso: false,
+                erro: error instanceof Error ? error.message : 'Erro desconhecido'
+            });
+        }
+    }
+
+    public finalizarUtilizacaoPor = async (req: Request, res: Response) => {
+        try {
+
+            const motoristaId: number = Number(req.params.motoristaId);
+            this.service.finalizarUtilizacaoPor(motoristaId);
+
+            res.status(201).json({
+                sucesso: true,
+            });
+        } catch (error) {
+            res.status(400).json({
                 sucesso: false,
                 erro: error instanceof Error ? error.message : 'Erro desconhecido'
             });
