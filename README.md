@@ -60,16 +60,21 @@ curl -X POST /motorista/criar \
 | Método | Path | Descrição |
 | :--- | :--- | :--- |
 | **POST** | `/automovelUtilizado/criar` | Cria um automovel utilizado por um motorista requer seguir a regra de nogico e um objeto `AutomovelUtilizadoCriarDTO`. |
-| **GET** | `/motorista/buscarPorId/{id}` | Retorna os detalhes de um motorista específico. |
-| **POST** | `/motorista/listar` | Cria um novo motorista. Requer um objeto `Motorista` no body. |
-| **DELETE** | `/motorista/deletar/{id}` | Remove um motorista. |
+| **PATCH** | `/automovelUtilizado/finalizarUtilizacao/{motoristaId}` | Finaliza a utilizacao de um automovel. |
+| **GET** | `/automovelUtilizado/listar` | Lista todos os automoveis utilizados |
 
 #### Exemplo de Uso (Criar Automóvel)
 
 ```bash
-curl -X POST /motorista/criar \
+curl -X POST /automovelUtilizado/criar \
      -H "Content-Type: application/json" \
-     -d '{ nome: "rafael" }'
+     -d '{ "id": null,
+        "dataInicioUtilizacao": "08/12/2025",
+        "dataFinalUtilizacao": null,
+        "motoristaId": 1,
+        "automovelPlaca": "DEFEFZzE",
+        "motivoDaUtilizacao": "Seguir carreira como motorista de uber"
+    }'
 ```
 
 ## Modelagem de dados
