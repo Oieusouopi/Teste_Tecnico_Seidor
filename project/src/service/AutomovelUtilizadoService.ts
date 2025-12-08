@@ -57,7 +57,7 @@ export class AutomovelUtilizadoService {
             automovel: automovel,
         }
 
-        return this.repository.criarAutomovelUtilizado(automovelEntidade);
+        return await this.repository.criarAutomovelUtilizado(automovelEntidade);
     }
 
     public async finalizarUtilizacaoPor(motoristaId: number): Promise<void> {
@@ -65,6 +65,10 @@ export class AutomovelUtilizadoService {
             throw new Error('Motorista não esta utilizando algum automóvel');
         }
 
-        return this.repository.finalizarUtilizacaoPor(motoristaId);
+        return await this.repository.finalizarUtilizacaoPor(motoristaId);
+    }
+
+    public async listar(): Promise<AutomovelUtilizado[]> {
+        return await this.repository.listar();
     }
 }

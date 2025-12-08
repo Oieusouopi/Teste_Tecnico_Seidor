@@ -5,4 +5,5 @@ export interface IAutomovelUtilizadoRepository {
     buscarMotoristaUtilizandoCarroPor(motoristId: number): Promise<AutomovelUtilizado | null>;
     buscarAutomovelUtilizadoPor(automovelPlaca: string): Promise<AutomovelUtilizado | null>;
     finalizarUtilizacaoPor(motoristaId: number): Promise<void>;
+    listar(): Promise<AutomovelUtilizado[]>
 }

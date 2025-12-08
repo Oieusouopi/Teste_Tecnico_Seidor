@@ -3,9 +3,13 @@ import { IAutomovelUtilizadoRepository } from "./IAutomovelUtilizadoRepository";
 
 export class AutomovelUtilizadoRepositoryMemory implements IAutomovelUtilizadoRepository {
 
-    public automoveisUtilizados: AutomovelUtilizado[] = [];
+    private automoveisUtilizados: AutomovelUtilizado[] = [];
+    private proximoId: number = 1;
 
     public async criarAutomovelUtilizado(automovelUtilizado: AutomovelUtilizado): Promise<AutomovelUtilizado> {
+        automovelUtilizado.id = this.proximoId;
+        this.proximoId += 1;
+        
         this.automoveisUtilizados.push(automovelUtilizado);
 
         return automovelUtilizado;
@@ -29,5 +33,9 @@ export class AutomovelUtilizadoRepositoryMemory implements IAutomovelUtilizadoRe
         const automovelUtilizado = this.automoveisUtilizados[index];
 
         automovelUtilizado.dataFinalUtilizacao = new Date();
+    }
+
+    public async listar(): Promise<AutomovelUtilizado[]> {
+        return this.automoveisUtilizados;
     }
 }

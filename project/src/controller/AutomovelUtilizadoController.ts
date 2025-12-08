@@ -39,4 +39,20 @@ export class AutomovelUtilizadoController {
             });
         }
     }
+
+    public listar = async (req: Request, res: Response) => {
+        try {
+            const dados = await this.service.listar();
+
+            res.status(201).json({
+                sucesso: true,
+                dados: dados
+            });
+        } catch (error) {
+            res.status(400).json({
+                sucesso: false,
+                erro: error instanceof Error ? error.message : 'Erro desconhecido'
+            });
+        }
+    }
 }

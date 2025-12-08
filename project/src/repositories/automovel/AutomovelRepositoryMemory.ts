@@ -17,7 +17,7 @@ export class AutomovelRepositoryMemory implements IAutomovelRepository {
 
     public async listarPorFiltos(automovelFiltroDTO: AutomovelFiltroDTO): Promise<Automovel[]> {
         const { marca, cor } = automovelFiltroDTO;
-        
+
         if (!marca && !cor) {
             return this.automoveis;
         }
