@@ -8,4 +8,5 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    command: ["npm", "run", "dev"]
+    command: sh -c "echo 'Rodando testes...' && npm test && echo 'Testes OK, iniciando dev...' && npm run dev"
+

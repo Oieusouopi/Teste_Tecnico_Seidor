@@ -12,9 +12,61 @@ Este projeto pode ser rodado com docker ou sem docker (recomendo fortemente util
 
 ## Docker vs Localmente
 
-docker build -t minha-api .
+Rodando o projeto
 
-docker run -p 3000:3000 -p 9229:9229 minha-api
+1 - Você pode executar este projeto de duas formas:
+
+2 - Usando Docker (recomendado — não depende da versão do Node da sua máquina)
+
+## Docker (recomendado)
+
+1. Construir a imagem
+
+No diretório raiz do projeto, execute:
+
+```bash
+docker-compose up --build
+```
+
+### Isso irá:
+
+- Construir a imagem da API (equivalente ao docker build)
+
+- Subir o container automaticamente
+
+- Reconstruir sempre que houver alterações no Dockerfile
+
+### A API ficará disponível em:
+
+```bash
+    http://localhost:3000
+```
+
+## Rodando localmente (sem Docker)
+
+### Requisitos:
+
+- Node.js 20+
+
+- npm ou yarn
+
+### instalar dependências
+
+```bash
+    npm install
+```
+
+### Rodar em modo desenvolvimento
+
+```bash
+    npm run dev
+```
+
+### A API ficará acessível em:
+
+```bash
+   http://localhost:3000
+```
 
 ## Endpoints da API
 
