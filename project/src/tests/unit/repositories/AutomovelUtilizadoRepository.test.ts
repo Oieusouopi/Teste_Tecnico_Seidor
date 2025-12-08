@@ -32,8 +32,11 @@ describe('AutomovelUtilizadoRepository', () => {
             const resultado = await repository.criarAutomovelUtilizado(automovelUtilizado);
 
             expect(resultado).toEqual(automovelUtilizado);
-            expect(repository.automoveisUtilizados.length).toBe(1);
-            expect(repository.automoveisUtilizados[0]).toEqual(automovelUtilizado);
+            
+            const lista = await repository.listar();
+
+            expect(lista.length).toBe(1);
+            expect(lista[0]).toEqual(automovelUtilizado);
         });
 
     });
