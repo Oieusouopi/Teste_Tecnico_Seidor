@@ -1,5 +1,5 @@
-interface AutomovelUtilizadoCriarDTO {
-    id: number;
+export interface AutomovelUtilizadoCriarDTO {
+    id: number | null;
     dataInicioUtilizacao: Date;
     motoristaId: number;
     automovelPlaca: string;

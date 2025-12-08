@@ -1,3 +1,4 @@
+import { AutomovelUtilizadoCriarDTO } from "../dto/AutomovelUtilizadoCriarDTO";
 import { Automovel } from "../models/Automovel";
 import { AutomovelUtilizado } from "../models/AutomovelUtilizado";
 import { Motorista } from "../models/Motorista";

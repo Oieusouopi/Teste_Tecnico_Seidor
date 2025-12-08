@@ -1,3 +1,4 @@
+import { AutomovelUtilizadoCriarDTO } from "../dto/AutomovelUtilizadoCriarDTO";
 import { AutomovelUtilizado } from "../models/AutomovelUtilizado";
 import { AutomovelUtilizadoService } from "../service/AutomovelUtilizadoService";
 import { Request, Response } from "express";
