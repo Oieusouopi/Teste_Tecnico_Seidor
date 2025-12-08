@@ -11,6 +11,10 @@ export class MotoristaService {
             throw new Error('Dados do motorista são obrigatórios');
         }
 
+        if (!motorista.nome || motorista.nome.trim() === '') {
+            throw new Error('Nome do motorista é obrigatório');
+        }
+
         const motoristaValido: Motorista = {
             id: motorista.id,
             nome: motorista.nome

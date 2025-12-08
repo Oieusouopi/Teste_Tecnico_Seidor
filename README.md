@@ -41,7 +41,7 @@ curl -X POST /automovel/criar \
 
 | Método | Path | Descrição |
 | :--- | :--- | :--- |
-| **GET** | `/motorista/listarPorFiltro` | Retorna uma lista de todos os motoristas filtrados. requer um objeto de filtro `AutomovelFiltroDTO`. |
+| **GET** | `/motorista/listarPorFiltro` | Retorna uma lista de todos os motoristas filtrados. requer um objeto de filtro `MotoristaFiltroDTO`. |
 | **GET** | `/motorista/buscarPorId/{id}` | Retorna os detalhes de um motorista específico. |
 | **POST** | `/motorista/criar` | Cria um novo motorista. Requer um objeto `Motorista` no body. |
 | **PUT** | `/motorista/atualizar/{id}` | Atualiza todas as informações de um motorista existente. Requer um objeto `MotoristaAtualizarDTO` no body |
@@ -57,13 +57,26 @@ curl -X POST /motorista/criar \
 
 ### Automovel Utilizado
 
+| Método | Path | Descrição |
+| :--- | :--- | :--- |
+| **POST** | `/automovelUtilizado/criar` | Cria um automovel utilizado por um motorista requer seguir a regra de nogico e um objeto `AutomovelUtilizadoCriarDTO`. |
+| **GET** | `/motorista/buscarPorId/{id}` | Retorna os detalhes de um motorista específico. |
+| **POST** | `/motorista/listar` | Cria um novo motorista. Requer um objeto `Motorista` no body. |
+| **DELETE** | `/motorista/deletar/{id}` | Remove um motorista. |
+
+#### Exemplo de Uso (Criar Automóvel)
+
+```bash
+curl -X POST /motorista/criar \
+     -H "Content-Type: application/json" \
+     -d '{ nome: "rafael" }'
+```
+
 ## Modelagem de dados
 
 Esta foi a modelagem de dados feita de acordo com as exigências do teste técnico.
 
 ![Modelagem do projeto](./docs/image/modelagem.png)
-
-## Arquitetura utilizada
 
 ## Técnologias e linguagem utilizadas:
     As técnologias utilizadas foram:

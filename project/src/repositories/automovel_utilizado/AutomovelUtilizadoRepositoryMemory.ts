@@ -11,13 +11,13 @@ export class AutomovelUtilizadoRepositoryMemory implements IAutomovelUtilizadoRe
         return automovelUtilizado;
     }
 
-    public async buscarMotoristaUtilizandoCarro(motoristId: number): Promise<AutomovelUtilizado | null> {
+    public async buscarMotoristaUtilizandoCarroPor(motoristId: number): Promise<AutomovelUtilizado | null> {
         const automovelUtilizado: AutomovelUtilizado | undefined = this.automoveisUtilizados.find((a) => a.motorista.id == motoristId && a.dataFinalUtilizacao == null);
 
         return automovelUtilizado || null;
     }
 
-    public async buscarAutomovelUtilizado(automovelPlaca: string): Promise<AutomovelUtilizado | null> {
+    public async buscarAutomovelUtilizadoPor(automovelPlaca: string): Promise<AutomovelUtilizado | null> {
         const automovelUtilizado: AutomovelUtilizado | undefined = this.automoveisUtilizados.find((a) => a.automovel.placa == automovelPlaca && a.dataFinalUtilizacao == null);
 
         return automovelUtilizado || null;

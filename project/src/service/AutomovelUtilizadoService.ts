@@ -14,11 +14,34 @@ export class AutomovelUtilizadoService {
     ) {}
 
     public async utilizarAutomovel(automovelUtilizado: AutomovelUtilizadoCriarDTO): Promise<AutomovelUtilizado> {
-        if (await this.repository.buscarMotoristaUtilizandoCarro(automovelUtilizado.motoristaId) != null) {
+
+        if (!automovelUtilizado) {
+            throw new Error('Dados são obrigatórios');
+        }
+
+        const {
+            dataInicioUtilizacao,
+            motoristaId,
+            automovelPlaca,
+        } = automovelUtilizado;
+
+        if (!dataInicioUtilizacao) {
+            throw new Error('Data de início da utilização é obrigatória');
+        }
+
+        if (!motoristaId || motoristaId <= 0) {
+            throw new Error('ID do motorista é obrigatório');
+        }
+
+        if (!automovelPlaca || automovelPlaca.trim() === '') {
+            throw new Error('A placa do automóvel é obrigatória');
+        }
+
+        if (await this.repository.buscarMotoristaUtilizandoCarroPor(automovelUtilizado.motoristaId) != null) {
             throw new Error('Motorista já esta utilizando algum automóvel');
         }
 
-        if (await this.repository.buscarAutomovelUtilizado(automovelUtilizado.automovelPlaca) != null) {
+        if (await this.repository.buscarAutomovelUtilizadoPor(automovelUtilizado.automovelPlaca) != null) {
             throw new Error('Automóvel já esta sendo utilizado');
         }
 
@@ -27,8 +50,8 @@ export class AutomovelUtilizadoService {
 
         const automovelEntidade: AutomovelUtilizado = {
             id: null,
-            dataFinalUtilizacao: automovelUtilizado.dataFinalUtilizacao,
-            dataInicioUtilizacao: automovelUtilizado.dataInicioUtilizacao,
+            dataFinalUtilizacao: null,
+            dataInicioUtilizacao: new Date(automovelUtilizado.dataInicioUtilizacao),
             motivoUtilizacao: automovelUtilizado.motivoUtilizacao,
             motorista: motorista,
             automovel: automovel,

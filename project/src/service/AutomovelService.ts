@@ -20,6 +20,14 @@ export class AutomovelService {
             throw new Error('Automóvel já existe');
         }
 
+        if (!automovel.marca || automovel.marca.trim() === '') {
+            throw new Error('Marca do automóvel é obrigatório');
+        }
+
+        if (!automovel.cor || automovel.cor.trim() === '') {
+            throw new Error('Cor do automóvel é obrigatório');
+        }
+
         const automovelValido: Automovel = {
             placa: automovel.placa,
             marca: automovel.marca,

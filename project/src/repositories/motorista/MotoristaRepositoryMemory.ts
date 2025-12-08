@@ -53,4 +53,5 @@ export class MotoristaRepositoryMemory implements IMotoristaRepository {
 
         return motorista || null;
     }
+    
 }

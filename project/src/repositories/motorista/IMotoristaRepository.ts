@@ -9,4 +9,4 @@ export interface IMotoristaRepository {
     listarPorFiltro(motoristaFiltroDTO: MotoristaFiltroDTO): Promise<Motorista[]>;
     deletar(id: number): Promise<void>;
     buscarPorId(id: number): Promise<Motorista | null>;
-}
+} 

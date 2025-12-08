@@ -3,6 +3,6 @@ import { automovelUtilizadoController } from "../dependencies/automovelUtilizado
 
 const automovelUtilizado = Router();
 
-automovelUtilizado.post('/criar', automovelUtilizadoController.criarAutomovelUtilizado)
+automovelUtilizado.post('/criar', automovelUtilizadoController.criarAutomovelUtilizado);
 
 export default automovelUtilizado;
